@@ -11,6 +11,9 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam
 //// 얘는 반드시 이 규격이여야 함? 외부 함수여야 한다;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam)) {return true;}
+
+
     // 핸들링(중계)
     _ASSERT(g_pWindow);
     return g_pWindow->MsgProc(hWnd, message, wParam, lParam);
@@ -118,8 +121,8 @@ void K_Window::SetHWND(HWND hWnd)
     GetClientRect(m_hWnd, &m_rtClient); // 이거저거 뺀 순수 출력화면
     g_rtClient = m_rtClient;
 
-    m_iClientWidth = m_rtClient.right - m_rtClient.left;
-    m_iClientHeight = m_rtClient.bottom - m_rtClient.top;
+    m_iClientWidth = m_rtWindow.right - m_rtWindow.left;
+    m_iClientHeight = m_rtWindow.bottom - m_rtWindow.top;
 }
 
 bool K_Window::SetWindow(HINSTANCE hInstance, const WCHAR* szTitle, UINT iWidth, UINT iHeight)
@@ -165,7 +168,7 @@ BOOL K_Window::InitInstance(const WCHAR* szTitle, UINT iWidth, UINT iHeight)
 {
     m_csStyle = WS_OVERLAPPEDWINDOW;
 
-    RECT rc = { 100, 100, iWidth + 100, iHeight + 100 };
+    RECT rc = { 0, 0, iWidth, iHeight};
     AdjustWindowRect(&rc, m_csStyle, FALSE);
 
     // 운영체제에 등록한 윈도우를 생성한다
@@ -189,6 +192,6 @@ BOOL K_Window::InitInstance(const WCHAR* szTitle, UINT iWidth, UINT iHeight)
 
     m_csStyle = GetWindowLong(m_hWnd, GWL_STYLE);
 
-    //UpdateWindow(hWnd);
+    UpdateWindow(m_hWnd);
     return TRUE;
 }

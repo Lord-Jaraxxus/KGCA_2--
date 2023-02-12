@@ -1,0 +1,22 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(498,5): warning MSB8004: Intermediate 디렉터리가 슬래시로 끝나지 않습니다. Intermediate 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
+  K_Window.cpp
+D:\KGCA41\KGCA41_kym\KymGameCore\k_Vector.h(38,39): warning C4227: 오래된 구문을 사용했습니다. 참조의 한정자가 무시됩니다.
+D:\KGCA41\KGCA41_kym\KymGameCore\k_Vector.h(40,41): warning C4227: 오래된 구문을 사용했습니다. 참조의 한정자가 무시됩니다.
+D:\KGCA41\KGCA41_kym\KymGameCore\K_Window.cpp(164,34): warning C4838: 'UINT'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\KGCA41\KGCA41_kym\KymGameCore\K_Window.cpp(164,49): warning C4838: 'UINT'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+  CallFunction.cpp
+D:\KGCA41\include\k_Vector.h(38,39): warning C4227: 오래된 구문을 사용했습니다. 참조의 한정자가 무시됩니다.
+D:\KGCA41\include\k_Vector.h(40,41): warning C4227: 오래된 구문을 사용했습니다. 참조의 한정자가 무시됩니다.
+  K_Network.cpp
+D:\KGCA41\include\k_Vector.h(38,39): warning C4227: 오래된 구문을 사용했습니다. 참조의 한정자가 무시됩니다.
+D:\KGCA41\include\k_Vector.h(40,41): warning C4227: 오래된 구문을 사용했습니다. 참조의 한정자가 무시됩니다.
+  Sample.cpp
+D:\KGCA41\include\k_Vector.h(38,39): warning C4227: 오래된 구문을 사용했습니다. 참조의 한정자가 무시됩니다.
+D:\KGCA41\include\k_Vector.h(40,41): warning C4227: 오래된 구문을 사용했습니다. 참조의 한정자가 무시됩니다.
+  코드를 생성하고 있습니다...
+D:\KGCA41\KGCA41_kym\WinChatServer_1_eventSelect\K_Network.cpp(135): warning C4715: 'K_Network::ErrorCheck': 모든 제어 경로에서 값을 반환하지는 않습니다.
+DirectXTK.lib(DDSTextureLoader.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK.lib(DDSTextureLoader.obj)' 또는 'D:\KGCA41\output\Debug\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTK.lib(pch.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK.lib(pch.obj)' 또는 'D:\KGCA41\output\Debug\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTK.lib(WICTextureLoader.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK.lib(WICTextureLoader.obj)' 또는 'D:\KGCA41\output\Debug\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+  WinChatServer_1_eventSelect.vcxproj -> D:\KGCA41\output\Debug\WinChatServer_1_eventSelect.exe

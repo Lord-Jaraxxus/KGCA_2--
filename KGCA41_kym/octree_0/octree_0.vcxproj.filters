@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="2D">
+      <UniqueIdentifier>{ff9377e2-2f0a-40f7-bc2b-772d912bca14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="space">
+      <UniqueIdentifier>{354c839a-395e-4352-b68c-87dccc101fe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D">
+      <UniqueIdentifier>{d456f5d1-b70f-4533-93aa-7c32a6dc0209}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="k_GameCore.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="sample.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="k_MapObject2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="k_NPC2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Object2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Player2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Vector2D.cpp">
+      <Filter>2D</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Collision.cpp">
+      <Filter>space</Filter>
+    </ClCompile>
+    <ClCompile Include="k_QuadTree.cpp">
+      <Filter>space</Filter>
+    </ClCompile>
+    <ClCompile Include="k_MapObject.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="k_NPC.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Object.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Player.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Vector.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Octree.cpp">
+      <Filter>space</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="k_MapObject2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="k_NPC2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Object2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Player2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Vector2D.h">
+      <Filter>2D</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Collision.h">
+      <Filter>space</Filter>
+    </ClInclude>
+    <ClInclude Include="k_QuadTree.h">
+      <Filter>space</Filter>
+    </ClInclude>
+    <ClInclude Include="k_GameCore.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="k_MapObject.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="k_NPC.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Object.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Player.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Vector.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Octree.h">
+      <Filter>space</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,12 @@
+#pragma once
+#include <windows.h>
+#include <map>
+#include <vector>
+#include <list>
+#include <set>
+#include <string>
+
+#define GAME_START	int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow) { 
+#define GAME_WINDOW(s,x,y)	Sample demo; demo.SetWindow(hInstance, L#s, x, y); demo.Run(); return 1; 
+#define GAME_END	}
+#define GAME_RUN(s,x,y)	GAME_START GAME_WINDOW(s,x,y) GAME_END

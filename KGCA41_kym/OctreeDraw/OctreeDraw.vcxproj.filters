@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Octree">
+      <UniqueIdentifier>{8c194306-c8c4-491c-ad51-d414eb0b7145}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="K_BaseObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Device.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Window.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Collision.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_GameCore.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_MapObject.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_MapObject2D.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Node_Factory.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Object.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_NPC2D.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_NPC.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Object2D.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Octree.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Player.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Player2D.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_QuadTree.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Vector.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Vector2D.cpp">
+      <Filter>Octree</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="K_BaseObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Device.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Window.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Sample.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Collision.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_GameCore.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_MapObject.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_MapObject2D.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Node_Factory.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_NPC.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_NPC2D.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Object.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Object2D.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Player.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Player2D.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Octree.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_QuadTree.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Vector2D.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Vector.h">
+      <Filter>Octree</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Std.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="PixelShader.txt" />
+    <Text Include="VertexShader.txt" />
+  </ItemGroup>
+</Project>

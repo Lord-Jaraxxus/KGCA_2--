@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="K_BattleScene" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAxiwCJCAAABMAgADBJFoCYQJAEAAASBABACAxkAARE=</HashCode>
+      <FileName>K_BattleScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_CardRewardScene" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAYAAAAAAAAAAAAAAAAAAAABACABACEAE=</HashCode>
+      <FileName>K_CardRewardScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_DeathScene" Collapsed="true">
+    <Position X="4.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>K_DeathScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_DeckViewScene" Collapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAABAAAAgAABAAAAAAIAAARAAAABACABAAAAE=</HashCode>
+      <FileName>K_DeckViewScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_EliteBattleScene" Collapsed="true">
+    <Position X="14" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAxiwCJCAAABMAgADBJFoCYQJAEAAASBABACAxkAARE=</HashCode>
+      <FileName>K_EliteBattleScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_EndingScene" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAIAAAAAAAAAAAAAABACABAAAAE=</HashCode>
+      <FileName>K_EndingScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_MapScene" Collapsed="true">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABEABCAEBAAABAAABAAEACAABAAAAAIAABBKABAAABE=</HashCode>
+      <FileName>K_MapScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_Scene" Collapsed="true">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAIAAAAAAAAABAAAAAAAACAAAACABAKABAAAAE=</HashCode>
+      <FileName>K_Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_TitleScene" Collapsed="true">
+    <Position X="11.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgCAABAAAQAAAACAAAAAAAAAAAAAAABACABAAAAE=</HashCode>
+      <FileName>K_TitleScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_BackGround" Collapsed="true">
+    <Position X="4.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAE=</HashCode>
+      <FileName>2dObjects.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_Npc" Collapsed="true">
+    <Position X="4.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAACAAAAAAgABAAAAAAAAAAE=</HashCode>
+      <FileName>2dObjects.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_Player" Collapsed="true">
+    <Position X="6.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>2dObjects.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_Button" Collapsed="true">
+    <Position X="6.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAgAAAAAACAAAAAAgABgAAAAAAAQAE=</HashCode>
+      <FileName>2dObjects.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_Map" Collapsed="true">
+    <Position X="10" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>2dObjects.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_MapObject" Collapsed="true">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAQAACAAAAAAgABgAAIAAAAQAE=</HashCode>
+      <FileName>2dObjects.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_Card" Collapsed="true">
+    <Position X="8.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAQAAQAAAAAEAAAAAAAACAAAAACgABAAAABAAAAAE=</HashCode>
+      <FileName>2dObjects.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_Character" Collapsed="true">
+    <Position X="10" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAgAAAEAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>2dObjects.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_EnemyIntent" Collapsed="true">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAQAAAAAAAABAAAAA=</HashCode>
+      <FileName>2dObjects.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="K_Deck" Collapsed="true">
+    <Position X="6.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAQAAABAAAAgAIAAAAAAAAAAAAABAAAAAAAAABEAA=</HashCode>
+      <FileName>K_Deck.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sample" Collapsed="true">
+    <Position X="4.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAmASAAAAAAEAKAAIAAAACAABAQAAAAAABACABAIAAE=</HashCode>
+      <FileName>Sample.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="CardNum" Collapsed="true">
+    <Position X="8.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAACBEAAAAAAAABAUAA=</HashCode>
+      <FileName>K_Deck.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

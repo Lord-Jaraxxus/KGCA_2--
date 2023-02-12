@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{f264385c-cb88-4268-bef6-0adcee3a1308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpp 파일">
+      <UniqueIdentifier>{38f71e53-6b8d-46fd-8548-8d3a39a0feb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpp 파일\리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="DefaultShape.txt" />
+    <Text Include="MaskShape.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_dx11.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="K_2dObject.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Device.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_BaseObject.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_DxState.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_GameCore.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Input.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Matrix.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_RenderTarget.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Shader.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_ShaderManager.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_SoundManager.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Sound.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Timer.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Texture.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_TextureManager.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Vector2D.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Vector.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Window.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Write.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TMath.cpp">
+      <Filter>cpp 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="K_BaseObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Device.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_DxState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_GameCore.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Input.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Shader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_ShaderManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Std.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Texture.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_TextureManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Timer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Vector.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Vector2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Window.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Write.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_2dObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Sound.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_SoundManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Matrix.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TMath.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="K_RenderTarget.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dx11.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_win32.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

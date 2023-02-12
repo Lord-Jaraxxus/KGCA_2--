@@ -1,0 +1,67 @@
+// HLSL 언어 (하이 레벨 쉐이더 랭귀지)
+// 정점 쉐이더. 
+// 정점쉐이더란 정점버퍼에 있는 모든 정점을 한번씩 작업한다.
+// 정점위치는 반드시 float4로 SV_POSITION 레지스터에 반환해야 한다. (등초좌표계? 일단 지금은 몰?루도 됨)
+// POSITION -> 시멘틱 : 의미구조, 이름은 멋대로 정해도 되기는 함 ㅋㅋ
+
+struct VS_Input
+{
+	float3 p : POSITION;
+	float4 color : COLOR;
+	float2 tex : TEXTURE;
+};
+
+struct VS_Output 
+{
+	float4 p  : SV_POSITION;
+	float4 c : COLOR0; // COLOR0 or COLOR1 
+	float2 t : TEXCOORD0; // TEXCOORD0 ~ TEXCOORD7 (15)
+};
+
+
+VS_Output VS(VS_Input input)
+{
+	VS_Output output = (VS_Output)0;
+	output.p = float4(input.p, 1.0f);
+	output.c = input.color;
+	output.t = input.tex;
+
+	//float4(px, py, pz, 1.0f) == float4(p, 1.0f) 이런걸 수의즐링이라고 한다
+	return output;
+}
+
+
+
+
+// 여기서부터 픽셀 쉐이더, 픽셀마다 호출된다
+
+Texture2D g_txTexA : register(t0); // 텍스터 레지스터 0번에다가 넘겼다는 뜻
+Texture2D g_txTexMaskA : register(t1);
+SamplerState g_SampleWrap : register(s0);
+
+struct PS_Input
+{
+	float4 p : SV_POSITION;
+	float4 c : COLOR0;			// COLOR0 ~ COLOR1
+	float2 t : TEXCOORD0;		// TEXCOORD0 ~ TEXCOORD7 (15)
+};
+
+struct PS_Output 
+{
+	float4 p  : SV_POSITION;
+	float4 c : COLOR0; // COLOR0 or COLOR1 
+	float2 t : TEXCOORD0; // TEXCOORD0 ~ TEXCOORD7 (15)
+};
+
+//해당 픽쉘의 컬러를 반환한다. 어디에? SV_TARGET 레지스터에
+float4 PS( PS_Input input) : SV_TARGET
+{
+	//return input.c;
+	//return g_txTextureA.Sample(g_SampleA, input.t);
+	float4 vColor = g_txTexA.Sample(g_SampleWrap, input.t);
+	float4 vMask  = g_txTexMaskA.Sample(g_SampleWrap, input.t);
+	float4 vFinalColor = vColor;
+	if( vMask.r >= 0.7) { discard; }
+
+	return vFinalColor;
+}

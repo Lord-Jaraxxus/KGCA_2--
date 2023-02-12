@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="k_Collision" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAEAEQAAQQAAAAAQBAAAAEAAAAAAQAAwgAA=</HashCode>
+      <FileName>k_Collision.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_GameCore" Collapsed="true">
+    <Position X="13.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAIAAAEAAAAAAAAAAAAAAAAAAAAAABACABAAAAM=</HashCode>
+      <FileName>k_GameCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_GameCore2D" Collapsed="true">
+    <Position X="12.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAFAQAAAAAAAAAAAAAAAIAAAAAAAAABACAhAAAAM=</HashCode>
+      <FileName>k_GameCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_GameCore3D" Collapsed="true">
+    <Position X="14.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACBAAAYAAAAAAAAAAAAAAAAAAAAABABACABAAAAM=</HashCode>
+      <FileName>k_GameCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_MapObject" Collapsed="true">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>k_MapObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_MapObject2D" Collapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>k_MapObject2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_NPC" Collapsed="true">
+    <Position X="6" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>k_NPC.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_NPC2D" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>k_NPC2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_Object" Collapsed="true">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAGAIgAAAAAAAEBAAAAAAAgAAIAAAQAAAAAE=</HashCode>
+      <FileName>k_Object.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_Object2D" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAIAAGAABAAAAAAAEBAAAAAAAgAAIACARAAAAAE=</HashCode>
+      <FileName>k_Object2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_Octree" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAgAAAAAABAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>k_Octree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_Player" Collapsed="true">
+    <Position X="3.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>k_Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_Player2D" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>k_Player2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_QuadTree" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAgAAAAAAAAAAAAAAAAAACAAABAAAA=</HashCode>
+      <FileName>k_QuadTree.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_Vector" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAEAAAASBAAAAAAAAAAEBgAQAAAAA=</HashCode>
+      <FileName>k_Vector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_Vector2D" Collapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAEAAAAQBAAAAAAAAAAEJgAAAAAAA=</HashCode>
+      <FileName>k_Vector2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_Node_Factory" Collapsed="true">
+    <Position X="4.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>k_Node_Factory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_Node2D" Collapsed="true">
+    <Position X="3.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAABAAAIAAACAAAAAgCAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>k_Node_Factory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="k_Node" Collapsed="true">
+    <Position X="5.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAABAAAIAAAgAAAAAgAAAAAAAAAAAAAAAiAAAAAgAA=</HashCode>
+      <FileName>k_Node_Factory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Box" Collapsed="true">
+    <Position X="3.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>k_Object.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="k_Box" Collapsed="true">
+    <Position X="3.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAABAAAAAAAAQAAgAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>k_Object.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="k_Sphere" Collapsed="true">
+    <Position X="15.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAABAAAAAAAAAAAgAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>k_Object.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Rect" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQQgAAAAAAAA=</HashCode>
+      <FileName>k_Object2D.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="k_Rect" Collapsed="true">
+    <Position X="11.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAABAAAAEAAAQAAAwAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>k_Object2D.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="k_Circle" Collapsed="true">
+    <Position X="14" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAFAAAAAAAAAAAEAAAAAAAAAAgAA=</HashCode>
+      <FileName>k_Object2D.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="k_CollisionType" Collapsed="true">
+    <Position X="14" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>k_Collision.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

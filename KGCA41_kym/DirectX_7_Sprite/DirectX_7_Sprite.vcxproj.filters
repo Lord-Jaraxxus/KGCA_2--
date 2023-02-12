@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Sample.cpp" />
+    <ClCompile Include="K_Shader.cpp">
+      <Filter>쉐이더</Filter>
+    </ClCompile>
+    <ClCompile Include="K_ShaderManager.cpp">
+      <Filter>쉐이더</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Timer.cpp">
+      <Filter>ETC</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Input.cpp">
+      <Filter>ETC</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Write.cpp">
+      <Filter>ETC</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Window.cpp">
+      <Filter>윈도우</Filter>
+    </ClCompile>
+    <ClCompile Include="K_Device.cpp">
+      <Filter>디바이스</Filter>
+    </ClCompile>
+    <ClCompile Include="K_BaseObject.cpp">
+      <Filter>오브젝트</Filter>
+    </ClCompile>
+    <ClCompile Include="K_GameCore.cpp">
+      <Filter>게임코어</Filter>
+    </ClCompile>
+    <ClCompile Include="k_Vector.cpp" />
+    <ClCompile Include="k_Vector2D.cpp" />
+    <ClCompile Include="K_Texture.cpp">
+      <Filter>텍스쳐</Filter>
+    </ClCompile>
+    <ClCompile Include="K_TextureManager.cpp">
+      <Filter>텍스쳐</Filter>
+    </ClCompile>
+    <ClCompile Include="K_DxState.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="K_Std.h" />
+    <ClInclude Include="Sample.h" />
+    <ClInclude Include="K_Shader.h">
+      <Filter>쉐이더</Filter>
+    </ClInclude>
+    <ClInclude Include="K_ShaderManager.h">
+      <Filter>쉐이더</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Timer.h">
+      <Filter>ETC</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Input.h">
+      <Filter>ETC</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Write.h">
+      <Filter>ETC</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Window.h">
+      <Filter>윈도우</Filter>
+    </ClInclude>
+    <ClInclude Include="K_Device.h">
+      <Filter>디바이스</Filter>
+    </ClInclude>
+    <ClInclude Include="K_BaseObject.h">
+      <Filter>오브젝트</Filter>
+    </ClInclude>
+    <ClInclude Include="K_GameCore.h">
+      <Filter>게임코어</Filter>
+    </ClInclude>
+    <ClInclude Include="k_Vector.h" />
+    <ClInclude Include="k_Vector2D.h" />
+    <ClInclude Include="K_Texture.h">
+      <Filter>텍스쳐</Filter>
+    </ClInclude>
+    <ClInclude Include="K_TextureManager.h">
+      <Filter>텍스쳐</Filter>
+    </ClInclude>
+    <ClInclude Include="K_DxState.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="쉐이더">
+      <UniqueIdentifier>{f31c7d44-8819-4585-aeea-7abf2ab711ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="텍스쳐">
+      <UniqueIdentifier>{76af4407-c628-4f64-860e-df27f911bc89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ETC">
+      <UniqueIdentifier>{a0b0c9ae-1175-4f1a-b50e-1b70c9c45c9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="윈도우">
+      <UniqueIdentifier>{01d80bdf-3cda-496f-9315-d1c22b83b25f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="디바이스">
+      <UniqueIdentifier>{4c09eccd-a047-4f04-9b08-31b1e658e49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="오브젝트">
+      <UniqueIdentifier>{02aaa559-4fd8-414f-a3ab-4312f6398aef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="게임코어">
+      <UniqueIdentifier>{dcb2f8d5-3598-47ff-815f-36546814a48d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="DefaultShape.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+    <Text Include="VertexShader.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+    <Text Include="PixelShader.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

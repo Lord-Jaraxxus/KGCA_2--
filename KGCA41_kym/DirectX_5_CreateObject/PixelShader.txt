@@ -1,0 +1,13 @@
+// 픽셀마다 호출된다
+
+Texture2D g_txTextureA : register(t0); // 텍스터 레지스터 0번에다가 넘겼다는 뜻
+SamplerState g_SampleA : register(s0);
+
+// 해당 픽쉘의 컬러를 반환한다. 어디에? SV_TARGET 레지스터에
+float4 PS(  float4 p : SV_POSITION,	
+			float4 c : COLOR0,
+			float2 t : TEXCOORD0) : SV_TARGET
+{
+	return g_txTextureA.Sample(g_SampleA, t); // 텍스처에 대한 샘플링이 들어가야한다
+	//return float4(t.x, t.y, 0, 1);
+}

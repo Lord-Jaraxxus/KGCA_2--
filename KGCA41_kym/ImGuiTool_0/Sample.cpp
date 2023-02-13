@@ -1,35 +1,35 @@
 #include "Sample.h"
-#include "K_TextureManager.h"
 
 bool Sample::Init() 
 {
 	// 이무기 세팅 
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\malgun.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesKorean()); // 한글 사용가능하게
-	ImGui_ImplWin32_Init(g_hWnd);
-	ImGui_ImplDX11_Init(m_pd3dDevice, m_pImmediateContext);
-	ImGui::StyleColorsDark();
+	//IMGUI_CHECKVERSION();
+	//ImGui::CreateContext();
+	//ImGuiIO& io = ImGui::GetIO();
+	//(void)io;
+	//io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\malgun.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesKorean()); // 한글 사용가능하게
+	//ImGui_ImplWin32_Init(g_hWnd);
+	//ImGui_ImplDX11_Init(m_pd3dDevice, m_pImmediateContext);
+	//ImGui::StyleColorsDark();
 
 	return true; 
 }
 
 bool Sample::Frame()
 {
-	// 이무기 프레임 시작
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
+	//// 이무기 프레임 시작
+	//ImGui_ImplDX11_NewFrame();
+	//ImGui_ImplWin32_NewFrame();
+	//ImGui::NewFrame();
 
-	// 이무기 테스트 윈도우 생성
-	ImGui::Begin(u8"테스트");
-	ImGui::Text(u8"가나다라마바사 엽엽");
-	if (ImGui::Button(u8"누르지 마시오")) 
-	{ 
-		CreateNewRect(); 
-	}
-	ImGui::End();
+	//// 이무기 테스트 윈도우 생성
+	//ImGui::Begin(u8"테스트");
+	//ImGui::Text(u8"가나다라마바사 엽엽");
+	//if (ImGui::Button(u8"누르지 마시오")) 
+	//{ 
+	//	CreateNewRect(); 
+	//}
+	//ImGui::End();
 	
 	return true;
 }
@@ -41,10 +41,11 @@ bool Sample::Render()
 		rect->Render();
 	}
 
-	// Assemble Together Draw Data라는데뭔소리야
-	ImGui::Render();
-	// 실제로 그릴 데이타를 렌더하는 부분은 여기..인가
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	//// Assemble Together Draw Data라는데뭔소리야
+	//ImGui::Render();
+	//// 실제로 그릴 데이타를 렌더하는 부분은 여기..인가
+	//ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
 
 	return true;
 }

@@ -156,10 +156,10 @@ HRESULT K_Device::CreateRenderTargetView()
 // 5) ºäÆ÷Æ® ¼³Á¤
 void K_Device::CreateViewport()
 {
-    //m_ViewPort.Width = g_rtClient.right;
-    //m_ViewPort.Height = g_rtClient.bottom;
-    m_ViewPort.Width = m_rtWindow.right - m_rtWindow.left;
-    m_ViewPort.Height = m_rtWindow.top - m_rtWindow.bottom;
+    m_ViewPort.Width = g_rtClient.right;
+    m_ViewPort.Height = g_rtClient.bottom;
+    //m_ViewPort.Width = m_rtWindow.right - m_rtWindow.left;
+    //m_ViewPort.Height = m_rtWindow.top - m_rtWindow.bottom;
 
     m_ViewPort.TopLeftX = 0;
     m_ViewPort.TopLeftY = 0;

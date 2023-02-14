@@ -3,6 +3,7 @@
 
 #include "K_GameCore.h"
 #include "K_Button.h"
+#include "K_Sprite.h"
 
 class Sample : public K_GameCore
 {
@@ -13,9 +14,12 @@ public:
 	bool Release();
 
 public:
+	std::vector<K_BaseObject*> m_pUIList;
+
 	std::vector<K_BaseObject*> m_pRectList;
 	std::vector<K_Button*> m_pButtonList;
-	//std::vector<K_Sprite*> m_pSpriteList;
+	std::vector<K_Sprite*> m_pSpriteList;
+
 	ImVec2 m_CursorPos;
 
 public:

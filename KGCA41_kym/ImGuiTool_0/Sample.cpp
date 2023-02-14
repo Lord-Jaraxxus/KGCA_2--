@@ -64,7 +64,11 @@ bool Sample::Frame()
 	{
 		if (IsDisable) { button->IsDisable = true; }
 		else { button->IsDisable = false; }
-		button->Frame();
+	}
+
+	for (auto UI : m_pUIList)
+	{
+		UI->Frame();
 	}
 
 	return true;
@@ -72,19 +76,14 @@ bool Sample::Frame()
 
 bool Sample::Render()
 {
-	//for (auto rect : m_pRectList)
+	//for (auto UI : m_pUIList)
 	//{
-	//	rect->Render();
+	//	UI->Render();
 	//}	
 
-	for (int i = m_pRectList.size(); i > 0; i--)
+	for (int i = m_pUIList.size(); i > 0; i--)
 	{
-		m_pRectList[i - 1]->Render();
-	}
-
-	for (int i = m_pButtonList.size(); i > 0; i--)
-	{
-		m_pButtonList[i - 1]->Render();
+		m_pUIList[i - 1]->Render();
 	}
 
 	// Assemble Together Draw Data扼绰单购家府具
@@ -99,14 +98,9 @@ bool Sample::Render()
 
 bool Sample::Release()
 {
-	for (auto rect : m_pRectList)
+	for (auto UI : m_pUIList)
 	{
-		rect->Release();
-	}
-
-	for (auto button : m_pButtonList)
-	{
-		button->Release();
+		UI->Release();
 	}
 
 	return true; 
@@ -118,7 +112,11 @@ bool Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight)
 
 	K_BaseObject* newRect = new K_BaseObject;
 	success = newRect->Create(m_pd3dDevice, m_pImmediateContext, L"../../data/img/map.jpg", L"../../data/shader/DefaultObject.txt");
-	if(success) m_pRectList.push_back(newRect);
+	if (success) 
+	{
+		m_pRectList.push_back(newRect);
+		m_pUIList.push_back(newRect);
+	} 
 
 	float OrginPosX = orginPos.x;
 	float OrginPosY = orginPos.y;
@@ -150,6 +148,7 @@ bool Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight)
 	if (success)
 	{
 		m_pButtonList.push_back(newButton);
+		m_pUIList.push_back(newButton);
 		newButton->AddTexture(L"../../data/img/button/BatteryDead.png");
 		newButton->AddTexture(L"../../data/img/button/BatteryFull.png");
 		newButton->AddTexture(L"../../data/img/button/BatteryClick.png");

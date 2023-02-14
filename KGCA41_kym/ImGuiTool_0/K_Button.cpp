@@ -9,6 +9,18 @@ bool K_Button::Frame()
 	return true;
 }
 
+bool K_Button::Release()
+{
+	K_BaseObject::Release();
+
+	for (auto texture : m_pTextureList) 
+	{
+		texture->Release();
+	}
+
+	return true;
+}
+
 bool K_Button::AddTexture(std::wstring filename)
 {
 	K_Texture* newTexture = I_Tex.Load(filename);

@@ -106,8 +106,7 @@ HRESULT K_Device::CreateSwapChain()
     ZeroMemory(&sd, sizeof(sd));
 
     // 필수적인 요소들만 채움
-    sd.BufferCount = 1; 
-    // 백버퍼 몇개 만들래? : 하나.
+    sd.BufferCount = 1; // 백버퍼 몇개 만들래? : 하나.
     sd.BufferDesc.Width = g_rtClient.right;
     sd.BufferDesc.Height = g_rtClient.bottom; //크기는? : 클라이언트랑 똑같이.
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // 4바이트 픽셀로
@@ -163,8 +162,6 @@ void K_Device::CreateViewport()
 
     m_ViewPort.TopLeftX = 0;
     m_ViewPort.TopLeftY = 0;
-
-
     m_ViewPort.MinDepth = 0.0f;
     m_ViewPort.MaxDepth = 1.0f;
     m_pImmediateContext->RSSetViewports(1, &m_ViewPort);

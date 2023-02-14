@@ -98,7 +98,8 @@ bool K_GameCore::K_GameCorePostRender()
     if (I_Timer.Render() != true) return false;
     //if (I_Input.Render() != true) return false;
     //if (I_Write.Render() != true) return false;
-    I_Write.Draw(0, 0, I_Timer.m_szTimer, { 1,0,0,1 });
+    //I_Write.Draw(0, 0, I_Timer.m_szTimer, { 1,0,0,1 });
+    I_Write.Draw(600, 0, I_Input.m_szCursorPos, { 1,0,0,1 });
 
     K_Device::PostRender();
     return true;

@@ -23,6 +23,12 @@
     <Text Include="MaskShape.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\include\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\include\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\include\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="..\..\include\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\..\include\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\..\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="K_2dObject.cpp" />
     <ClCompile Include="K_BaseObject.cpp" />
     <ClCompile Include="K_Device.cpp" />
@@ -45,6 +51,14 @@
     <ClCompile Include="TMath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\imgui\imconfig.h" />
+    <ClInclude Include="..\..\include\imgui\imgui.h" />
+    <ClInclude Include="..\..\include\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="..\..\include\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="..\..\include\imgui\imgui_internal.h" />
+    <ClInclude Include="..\..\include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\..\include\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\..\include\imgui\imstb_truetype.h" />
     <ClInclude Include="K_2dObject.h" />
     <ClInclude Include="K_BaseObject.h" />
     <ClInclude Include="K_Device.h" />

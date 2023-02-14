@@ -26,12 +26,18 @@ bool K_Input::Frame()
 		}
 	}
 
+
 	::GetCursorPos(&m_ptPos); // 화면좌표계로 마우스 위치를 얻어옴
 	::ScreenToClient(g_hWnd, &m_ptPos); // 화면좌표계를 클라이언트 좌표계로 변경
 	m_ptOffset.x = m_ptPos.x - m_ptPrePos.x;
 	m_ptOffset.y = m_ptPos.y - m_ptPrePos.y;
 	m_ptPrePos = m_ptPos;
-	 
+
+	m_szCursorPos = std::to_wstring(m_ptPos.x);
+	m_szCursorPos += L" , ";
+	m_szCursorPos += std::to_wstring(m_ptPos.y);
+	m_szCursorPos += L"\n";
+
 	return true;
 }
 

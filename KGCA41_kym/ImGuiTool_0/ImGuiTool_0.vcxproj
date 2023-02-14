@@ -19,10 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="K_Button.cpp" />
+    <ClCompile Include="K_Sprite.cpp" />
     <ClCompile Include="Sample.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="K_Button.h" />
+    <ClInclude Include="K_Sprite.h" />
     <ClInclude Include="Sample.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KymGameCore\KymGameCore.vcxproj">
+      <Project>{c90af616-923e-486f-bd3c-0473c139cdbe}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -67,6 +67,7 @@ K_Texture* K_TextureManager::Load(std::wstring name)
         hr = pNewData->Load(m_pd3dDevice, m_pImmediateContext, name);
         if (SUCCEEDED(hr)) m_List.insert(std::make_pair(name, pNewData));
     }
+
     return pNewData;
 }
 

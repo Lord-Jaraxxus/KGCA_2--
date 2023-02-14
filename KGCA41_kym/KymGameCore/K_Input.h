@@ -18,6 +18,7 @@ public:
 	virtual bool Release();
 
 public:
+	std::wstring m_szCursorPos;
 	POINT m_ptPos; // 마우스 위치
 	POINT m_ptPrePos;
 	POINT m_ptOffset;

@@ -1,5 +1,5 @@
 #pragma once
-#include "K_BaseObject.h"
+#include "K_UIObject.h"
 
 struct CI // Cut Information
 {
@@ -12,12 +12,12 @@ struct CI // Cut Information
 	K_Texture* tc; // Texture class
 };
 
-class K_Sprite : public K_BaseObject
+class K_Sprite : public K_UIObject
 {
 public:
 	virtual bool Frame() override;
 	virtual bool Release() override;
-	virtual bool UpdateTexture();
+	virtual bool UpdateCut();
 	virtual bool AddCut(ImVec2 uvTL, ImVec2 uvBR, std::wstring tn, std::wstring sn);
 
 public:
@@ -26,8 +26,7 @@ public:
 	int m_iMaxFrame = 0;
 	int m_iCurrentFrame = 0;
 
-public:
-	ImVec2 m_CenterPos;
-	ImVec2 m_WidthHeight;
+	int m_iCurrentFps = 0;
+	int m_iMaxFps = 3;
 };
 

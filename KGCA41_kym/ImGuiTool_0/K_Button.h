@@ -1,5 +1,5 @@
 #pragma once
-#include "K_BaseObject.h"
+#include "K_UIObject.h"
 
 enum ButtonState
 {
@@ -10,7 +10,7 @@ enum ButtonState
 };
 
 
-class K_Button : public K_BaseObject
+class K_Button : public K_UIObject
 {
 public:
 	virtual bool Frame() override;

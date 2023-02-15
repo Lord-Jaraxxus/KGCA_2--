@@ -14,9 +14,9 @@ public:
 	bool Release();
 
 public:
-	std::vector<K_BaseObject*> m_pUIList;
+	std::vector<K_UIObject*> m_pUIList;
 
-	std::vector<K_BaseObject*> m_pRectList;
+	std::vector<K_UIObject*> m_pRectList;
 	std::vector<K_Button*> m_pButtonList;
 	std::vector<K_Sprite*> m_pSpriteList;
 
@@ -30,5 +30,6 @@ public:
 public:
 	bool CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight);
 	bool CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight);
+	bool CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight);
 }; 
 

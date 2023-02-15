@@ -1,8 +1,9 @@
 #include "K_Sprite.h"
+#include "K_Timer.h"
 
 bool K_Sprite::Frame()
 {
-	UpdateTexture();
+	UpdateCut();
 
 	return true;
 }
@@ -20,17 +21,22 @@ bool K_Sprite::Release()
 	return true;
 }
 
-bool K_Sprite::UpdateTexture()
+bool K_Sprite::UpdateCut()
 {
 	m_pTextureSRV = m_pCutInfoList[m_iCurrentFrame]->tc->m_pTextureSRV;
+	SetUV(m_pCutInfoList[m_iCurrentFrame]->uvTL, m_pCutInfoList[m_iCurrentFrame]->uvBR);
+	UpdateVertexBuffer();
 
-	m_VertexList[0].t.x = m_pCutInfoList[m_iCurrentFrame]->uvBR.x;
-	m_VertexList[0].t.y = m_pCutInfoList[m_iCurrentFrame]->uvBR.y;
-	m_VertexList[0].t.x = m_pCutInfoList[m_iCurrentFrame]->uvBR.x;
-	m_VertexList[0].t.x = m_pCutInfoList[m_iCurrentFrame]->uvBR.x;
+	if (I_Timer.m_fFPSTimer > m_iCurrentFps / m_iMaxFps)
+	{
+		float fpstimer = I_Timer.m_fFPSTimer;
 
-	m_iCurrentFrame++;
-	if (m_iCurrentFrame >= m_iMaxFrame) { m_iCurrentFrame = 0; }
+		m_iCurrentFrame++;
+		if (m_iCurrentFrame >= m_iMaxFrame) { m_iCurrentFrame = 0; }
+
+		m_iCurrentFps++;
+		if (m_iCurrentFps >= m_iMaxFps) { m_iCurrentFps = 0; }
+	}
 
 	return true;
 }

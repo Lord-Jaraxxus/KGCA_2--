@@ -15,12 +15,13 @@ public:
 	UINT m_iFPS = 0;
 	std::wstring m_szTimer;
 
+	float m_fFPSTimer = 0.0f;
 
 //얘들은 temp라서 일단 외부접근 막아둠
 private:
 	DWORD dwBeforeTime = 0; 
 	UINT m_iFPSCounter = 0;
-	float m_fFPSTimer = 0.0f;
+	//float m_fFPSTimer = 0.0f;
 };
 
 #define I_Timer K_Timer::GetInstance()

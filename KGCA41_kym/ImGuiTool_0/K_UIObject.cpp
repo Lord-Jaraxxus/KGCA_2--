@@ -30,15 +30,6 @@ bool K_UIObject::SetPosition(ImVec2 orginPos, ImVec2 widthHeight, float depth) /
 	return true;
 }
 
-ImVec2 K_UIObject::PtoN(ImVec2 pxWH)
-{
-	ImVec2 result;
-
-	result.x = pxWH.x / g_rtClient.right;
-	result.y = pxWH.y / g_rtClient.bottom;
-
-	return result;
-}
 
 bool K_UIObject::SetAlpha(float alpha)
 {
@@ -48,4 +39,14 @@ bool K_UIObject::SetAlpha(float alpha)
 	m_VertexList[3].c.w = alpha;
 
 	return true;
+}
+
+ImVec2 K_UIObject::PtoN(ImVec2 pxWH)
+{
+	ImVec2 result;
+
+	result.x = pxWH.x / g_rtClient.right;
+	result.y = pxWH.y / g_rtClient.bottom;
+
+	return result;
 }

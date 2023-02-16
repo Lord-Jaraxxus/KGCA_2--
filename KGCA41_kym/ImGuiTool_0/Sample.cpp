@@ -12,8 +12,8 @@ bool Sample::Init()
 	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\malgun.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesKorean()); // 한글 사용가능하게
 	ImGui_ImplWin32_Init(g_hWnd);
 	ImGui_ImplDX11_Init(m_pd3dDevice, m_pImmediateContext);
-	ImGui::StyleColorsDark();
-
+	//ImGui::StyleColorsDark();
+	ImGui::StyleColorsLight();
 	return true; 
 }
 
@@ -23,42 +23,74 @@ bool Sample::Frame()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-
+	 
 	//// 이무기 테스트 윈도우 생성
-	ImGui::Begin(u8"테스트");
+	ImGui::Begin(u8"UI Tool",&IsToolActive, ImGuiWindowFlags_MenuBar);
 
-	ImGui::Text(u8"이미지 생성");
-	if (ImGui::Button(u8"누르지 마시오")) // 버튼이 눌렸다면
+	if (ImGui::BeginMenuBar())
 	{
-		if (IsRandom) // -1 ~ 1 사이의 랜덤 xy좌표 생성
+		if (ImGui::BeginMenu(u8"파일"))
 		{
-			float randX = rand();
-			float randY = rand();
-			randX = ((randX / RAND_MAX) * 2) - 1.0f;
-			randY = (((randY / RAND_MAX) * 2) - 1.0f) * -1.0f;
-			CreateNewRect({ randX, randY }, { 1.0f, 1.0f }, 0.3f);
+			if (ImGui::MenuItem(u8"새로 만들기", "Ctrl+N")) { IsClear = true; }
+			if (ImGui::MenuItem(u8"열기", "Ctrl+O")) { /* Do stuff */ }
+			if (ImGui::MenuItem(u8"저장", "Ctrl+S")) { /* Do stuff */ }
+			ImGui::EndMenu();
 		}
-		else CreateNewRect({ 0,0 }, {1.0f, 1.0f}, 0.3f);
+		ImGui::EndMenuBar();
 	}
-	ImGui::Checkbox(u8"란듐?", &IsRandom);
-	ImGui::Checkbox(u8"클릭한 위치에 네모 생성", &IsSelect);
 
-	ImGui::Text(u8"버튼 생성");
-	if (ImGui::Button(u8"버튼 생성 버튼!")) 
+	if (ImGui::CollapsingHeader(u8"이미지", nullptr)) // 접을 수 있는 헤더
 	{
-		CreateNewButton({ 0,0 }, { 0.5f, 0.5f }, 0.2f);
-	}
-	ImGui::Checkbox(u8"버튼 비활성화", &IsDisable);
+		ImGui::InputFloat2(u8"x,y (NDC) - image", ImageXY);
+		ImGui::InputFloat2(u8"Depth,Alpha - image", ImageDA);
 
-	ImGui::Text(u8"스프라이트 생성");
-	if (ImGui::Button(u8"스프라이트 생성 버튼"))
+		ImGui::Checkbox(u8"랜덤 위치에 이미지 생성", &IsRandom);
+		ImGui::Checkbox(u8"클릭한 위치에 이미지 생성", &IsSelect);
+
+		if (ImGui::Button(u8"이미지 생성 버튼")) // 버튼이 눌렸다면
+		{
+			if (IsRandom) // -1 ~ 1 사이의 랜덤 xy좌표 생성
+			{
+				float randX = rand();
+				float randY = rand();
+				randX = ((randX / RAND_MAX) * 2) - 1.0f;
+				randY = (((randY / RAND_MAX) * 2) - 1.0f) * -1.0f;
+				CreateNewRect({ randX, randY }, { 1.0f, 1.0f }, ImageDA[0], ImageDA[1]);
+			}
+			else CreateNewRect( {ImageXY[0],ImageXY[1]} , { 1.0f, 1.0f }, ImageDA[0], ImageDA[1]);
+		}
+	}
+
+	if (ImGui::CollapsingHeader(u8"버튼", nullptr)) 
 	{
-		CreateNewSprite({ -0.5f, 0.0f }, { 0.5f, 0.5f }, 0.1f);
+		ImGui::InputFloat2(u8"x,y (NDC) - button", ButtonXY);
+		ImGui::InputFloat2(u8"Depth,Alpha - button", ButtonDA);
+
+		if (ImGui::Button(u8"버튼 생성 버튼!"))
+		{
+			CreateNewButton({ ButtonXY[0], ButtonXY[1] }, { 0.5f, 0.5f }, ButtonDA[0], ButtonDA[1]);
+		}
+		ImGui::Checkbox(u8"버튼 비활성화", &IsDisable);
 	}
 
-	ImGui::Checkbox(u8"와이어 프레임", &IsWireFrame);
-	ImGui::Checkbox(u8"깊이 버퍼 사용", &IsDepth);
-	ImGui::Checkbox(u8"알파블렌딩 사용", &IsAlphaBlend);
+	if (ImGui::CollapsingHeader(u8"스프라이트", nullptr)) 
+	{
+		ImGui::InputFloat2(u8"x,y (NDC) - sprite", SpriteXY);
+		ImGui::InputFloat2(u8"Depth,Alpha - sprite", SpriteDA);
+
+		ImGui::Text(u8"스프라이트 생성");
+		if (ImGui::Button(u8"스프라이트 생성 버튼"))
+		{
+			CreateNewSprite({ SpriteXY[0], SpriteXY[1] }, { 0.5f, 0.5f }, SpriteDA[0], SpriteDA[1]);
+		}
+	}
+
+	if (ImGui::CollapsingHeader(u8"상태 변환", nullptr)) 
+	{
+		ImGui::Checkbox(u8"와이어 프레임 사용", &IsWireFrame);
+		ImGui::Checkbox(u8"깊이 버퍼 사용", &IsDepth);
+		ImGui::Checkbox(u8"알파블렌딩 사용", &IsAlphaBlend);
+	}
 
 	ImGui::End();
 
@@ -68,7 +100,7 @@ bool Sample::Frame()
 		m_CursorPos.y = I_Input.m_ptPos.y;
 		m_CursorPos.x = ((m_CursorPos.x / g_rtClient.right) * 2.0f) - 1.0f; // 마우스 좌표를 -1 ~ 1 사이로 변환
 		m_CursorPos.y = (((m_CursorPos.y / g_rtClient.bottom) * 2.0f) - 1.0f) * -1.0f; // 마우스 좌표를 -1 ~ 1 사이로 변환
-		CreateNewRect({ (float)m_CursorPos.x, (float)m_CursorPos.y }, { 1.0f, 1.0f }, 0.3f);
+		CreateNewRect({ (float)m_CursorPos.x, (float)m_CursorPos.y }, { 1.0f, 1.0f }, ImageDA[0], ImageDA[1]);
 	}
 	
 	for (auto button : m_pButtonList)
@@ -125,7 +157,7 @@ bool Sample::Release()
 	return true; 
 }
 
-bool Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth)
+bool Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha)
 {
 	bool success;
 
@@ -138,6 +170,7 @@ bool Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth)
 		m_pUIList.push_back(newRect);
 
 		newRect->SetPosition(orginPos, widthHeight, depth);
+		newRect->SetAlpha(alpha);
 		newRect->SetUV({ 0.0f, 0.0f }, { 1.0f, 1.0f });
 		newRect->UpdateVertexBuffer();
 	} 
@@ -145,7 +178,7 @@ bool Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth)
 	return success;
 }
 
-bool Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth)
+bool Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha)
 {
 	bool success;
 
@@ -161,6 +194,7 @@ bool Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth)
 		newButton->AddTexture(L"../../data/img/button/BatteryDisable.png");
 
 		newButton->SetPosition(orginPos, widthHeight, depth);
+		newButton->SetAlpha(alpha);
 		newButton->SetUV({ 0.0f, 0.0f }, { 1.0f, 1.0f });
 		newButton->UpdateVertexBuffer();
 	}
@@ -168,7 +202,7 @@ bool Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth)
 	return success;
 }
 
-bool Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth)
+bool Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha)
 {
 	bool success;
 
@@ -203,7 +237,7 @@ bool Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth)
 
 		newSprite->m_OrginPos = orginPos;
 		newSprite->SetPosition(orginPos, widthHeight, depth);
-		newSprite->SetAlpha(0.1f);
+		newSprite->SetAlpha(alpha);
 		newSprite->UpdateVertexBuffer();
 	}
 	

@@ -2,6 +2,7 @@
 #pragma comment(lib, "KymGameCore_d")
 
 #include "K_GameCore.h"
+#include "K_UIObject.h"
 #include "K_Button.h"
 #include "K_Sprite.h"
 
@@ -24,16 +25,25 @@ public:
 	ImVec2 m_CursorPos;
 
 public:
+	bool IsToolActive = true;
 	bool IsRandom = false;
 	bool IsSelect = false;
 	bool IsDisable = false;
 	bool IsWireFrame = false;
 	bool IsDepth = false;
 	bool IsAlphaBlend = false;
+	bool IsClear = false;
+
+	float ImageXY[2] = { 0, };
+	float ImageDA[2] = { 0, 1 };
+	float ButtonXY[2] = { 0, };
+	float ButtonDA[2] = { 0, 1 };
+	float SpriteXY[2] = { 0, };
+	float SpriteDA[2] = { 0, 1 };
 
 public:
-	bool CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth);
-	bool CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth);
-	bool CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth);
+	bool CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
+	bool CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
+	bool CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
 }; 
 

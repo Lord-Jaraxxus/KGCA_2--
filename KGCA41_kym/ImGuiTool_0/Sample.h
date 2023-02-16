@@ -15,6 +15,7 @@ public:
 
 public:
 	std::vector<K_UIObject*> m_pUIList;
+	std::vector<K_UIObject*> m_pUIAlphaList;
 
 	std::vector<K_UIObject*> m_pRectList;
 	std::vector<K_Button*> m_pButtonList;
@@ -26,10 +27,13 @@ public:
 	bool IsRandom = false;
 	bool IsSelect = false;
 	bool IsDisable = false;
+	bool IsWireFrame = false;
+	bool IsDepth = false;
+	bool IsAlphaBlend = false;
 
 public:
-	bool CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight);
-	bool CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight);
-	bool CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight);
+	bool CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth);
+	bool CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth);
+	bool CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth);
 }; 
 

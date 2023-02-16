@@ -19,8 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="DefaultShape.txt" />
-    <Text Include="MaskShape.txt" />
+    <Text Include="..\..\data\shader\DefaultColor.txt" />
+    <Text Include="..\..\data\shader\DefaultObject.txt" />
+    <Text Include="..\..\data\shader\DefaultObject_Orgin.txt" />
+    <Text Include="..\..\data\shader\DefaultShape.txt" />
+    <Text Include="..\..\data\shader\MaskShape.txt" />
+    <Text Include="..\..\data\shader\MaskShape_Png.txt" />
+    <Text Include="..\..\data\shader\MaskShape_Png_Black.txt" />
+    <Text Include="..\..\data\shader\MaskShape_Red.txt" />
+    <Text Include="..\..\data\shader\Skinning.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\include\imgui\imgui.cpp" />

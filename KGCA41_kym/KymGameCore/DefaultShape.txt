@@ -58,5 +58,6 @@ float4 PS( PS_Input input) : SV_TARGET
 	//return input.c;
 	//return g_txTextureA.Sample(g_SampleA, input.t);
 	float4 vColor = g_txTextureA.Sample(g_SampleA, input.t);
+	vColor.a = 0.5f;
 	return vColor; //* float4(1,0,0,1); // 텍스처에 대한 샘플링이 들어가야한다
 }

@@ -15,10 +15,38 @@
     <Filter Include="ImGui">
       <UniqueIdentifier>{2c4b94cb-2dc1-45a6-a161-381d2169e8c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="쉐이더">
+      <UniqueIdentifier>{01580232-d070-4470-a4c4-59707f54ee01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="DefaultShape.txt" />
-    <Text Include="MaskShape.txt" />
+    <Text Include="..\..\data\shader\DefaultColor.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+    <Text Include="..\..\data\shader\DefaultObject.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+    <Text Include="..\..\data\shader\DefaultObject_Orgin.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+    <Text Include="..\..\data\shader\DefaultShape.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+    <Text Include="..\..\data\shader\MaskShape.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+    <Text Include="..\..\data\shader\MaskShape_Png.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+    <Text Include="..\..\data\shader\MaskShape_Png_Black.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+    <Text Include="..\..\data\shader\MaskShape_Red.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
+    <Text Include="..\..\data\shader\Skinning.txt">
+      <Filter>쉐이더</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="K_2dObject.cpp">

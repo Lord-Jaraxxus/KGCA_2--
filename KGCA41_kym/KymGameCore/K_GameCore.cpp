@@ -60,8 +60,9 @@ bool K_GameCore::K_GameCorePreRender()
 
     m_pImmediateContext->PSSetSamplers(0, 1, &K_DxState::g_pDefaultSS);
     m_pImmediateContext->RSSetViewports(1, &m_ViewPort);
-    m_pImmediateContext->RSSetState(K_DxState::g_pDefaultRSSolid);
-    m_pImmediateContext->OMSetBlendState(K_DxState::g_pAlphaBlend, 0, -1);
+    m_pImmediateContext->RSSetState(K_DxState::g_pCurrentRS);
+    m_pImmediateContext->OMSetDepthStencilState(K_DxState::g_pCurrentDSS, 0x01);
+    m_pImmediateContext->OMSetBlendState(K_DxState::g_pCurrentBS, 0, -1);
 
     return true;
 }
@@ -90,6 +91,11 @@ bool K_GameCore::K_GameCoreRender()
 
 bool K_GameCore::K_GameCorePostRender()
 {
+    K_DxState::g_pCurrentRS = K_DxState::g_pDefaultRSSolid;
+    m_pImmediateContext->RSSetState(K_DxState::g_pCurrentRS);
+    K_DxState::g_pCurrentBS = K_DxState::g_pAlphaBlendDisable;
+    m_pImmediateContext->OMSetBlendState(K_DxState::g_pCurrentBS, 0, -1);
+
     m_BG.SetMatrix(nullptr, nullptr, nullptr); // 여긴 얘기를 하다 마셨어
     m_BG.Render(); // 얘는 이제 백버퍼에 바로 그리는?듯?
 

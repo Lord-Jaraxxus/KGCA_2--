@@ -77,7 +77,6 @@ bool K_RenderTarget::Begin()
 
     // 클리어도 함 해주고, 근데 난 어차피 Device PreRender에서 해주는데? 뭐 여러번 지우지 
     const FLOAT color[] = { 1, 1, 1, 1 };
-    //const FLOAT color[] = { 0.5f, 0.5f, 0.5f, 1 };;
     m_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView, color);
     m_pImmediateContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0, 0);
 

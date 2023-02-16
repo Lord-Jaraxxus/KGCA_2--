@@ -1,15 +1,22 @@
 #include "K_DxState.h"
 
+ID3D11SamplerState* K_DxState::g_pCurrentSS = nullptr;
 ID3D11SamplerState* K_DxState::g_pDefaultSS = nullptr;
 ID3D11SamplerState* K_DxState::g_pDefaultSSWrap = nullptr;
 ID3D11SamplerState* K_DxState::g_pDefaultSSMirror = nullptr;
-ID3D11BlendState* K_DxState::g_pAlphaBlend = nullptr;
 
+ID3D11RasterizerState* K_DxState::g_pCurrentRS = nullptr;
 ID3D11RasterizerState* K_DxState::g_pDefaultRSWireFrame = nullptr;
 ID3D11RasterizerState* K_DxState::g_pDefaultRSSolid = nullptr;
 
+ID3D11BlendState* K_DxState::g_pCurrentBS = nullptr;
+ID3D11BlendState* K_DxState::g_pAlphaBlend = nullptr;
+ID3D11BlendState* K_DxState::g_pAlphaBlendDisable = nullptr;
+
+ID3D11DepthStencilState* K_DxState::g_pCurrentDSS = nullptr;
 ID3D11DepthStencilState* K_DxState::g_pDefaultDepthStencil = nullptr;
 ID3D11DepthStencilState* K_DxState::g_pGreaterDepthStencil = nullptr;
+ID3D11DepthStencilState* K_DxState::g_pDisableDepthStencil = nullptr;
 
 bool K_DxState::SetState(ID3D11Device* pd3dDevice)
 {
@@ -32,6 +39,8 @@ bool K_DxState::SetState(ID3D11Device* pd3dDevice)
     sd.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;
     hr = pd3dDevice->CreateSamplerState(&sd, &g_pDefaultSSMirror);
 
+
+
     D3D11_RASTERIZER_DESC rd;
     ZeroMemory(&rd, sizeof(rd));
     rd.DepthClipEnable = TRUE;
@@ -44,6 +53,10 @@ bool K_DxState::SetState(ID3D11Device* pd3dDevice)
     pd3dDevice->CreateRasterizerState(&rd,
         &g_pDefaultRSSolid);
 
+    g_pCurrentRS = g_pDefaultRSSolid;
+
+
+
 
     D3D11_BLEND_DESC bd;
     ZeroMemory(&bd, sizeof(bd));
@@ -51,13 +64,13 @@ bool K_DxState::SetState(ID3D11Device* pd3dDevice)
     // 혼합 : 섞는다. 
     // 배경(목적지) d-RGBA : 백버퍼에 이미 랜더링 되어 있는 결과,
     // 현재 소스 :  s-RGBA : 지금 랜더링 하려는 객체, 픽셀쉐이더
-    //  RGB 성분을 혼합하는 명령
     // 알파블랜딩 공식
     // finalColor = SrcColor*SrcAlpha+DestColor*(1.0f-SrcApha);
     // apha= 1.0f (불투명), alpha=0.0f (투명), alpha 0~1 (반투명)
     // finalColor = SrcColor*1.0f+DestColor*(1.0f-1.0f);
     // finalColor = SrcColor*0.0f+DestColor*(1.0f-0.0f);
     // finalColor = SrcColor*0.5f+DestColor*(1.0f-0.5f);
+    //  RGB 성분을 혼합하는 명령
     bd.RenderTarget[0].BlendEnable = TRUE;
     bd.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
     bd.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
@@ -72,6 +85,11 @@ bool K_DxState::SetState(ID3D11Device* pd3dDevice)
         D3D11_COLOR_WRITE_ENABLE_ALL;
     pd3dDevice->CreateBlendState(&bd, &g_pAlphaBlend);
 
+    bd.RenderTarget[0].BlendEnable = FALSE;
+    pd3dDevice->CreateBlendState(&bd, &g_pAlphaBlendDisable);
+
+
+
     D3D11_DEPTH_STENCIL_DESC dsd;
     ZeroMemory(&dsd, sizeof(dsd));
     dsd.DepthEnable = TRUE;
@@ -84,8 +102,12 @@ bool K_DxState::SetState(ID3D11Device* pd3dDevice)
      D3D11_DEPTH_STENCILOP_DESC FrontFace;
      D3D11_DEPTH_STENCILOP_DESC BackFace;*/
     hr = pd3dDevice->CreateDepthStencilState(&dsd, &g_pDefaultDepthStencil);
-    dsd.DepthFunc = D3D11_COMPARISON_GREATER;
-    hr = pd3dDevice->CreateDepthStencilState(&dsd, &g_pGreaterDepthStencil);
+    //dsd.DepthFunc = D3D11_COMPARISON_GREATER;
+    //hr = pd3dDevice->CreateDepthStencilState(&dsd, &g_pGreaterDepthStencil);
+
+    dsd.DepthEnable = false;
+    hr = pd3dDevice->CreateDepthStencilState(&dsd, &g_pDisableDepthStencil);
+    g_pCurrentDSS = g_pDisableDepthStencil;
 
     return true;
 }
@@ -93,5 +115,14 @@ bool K_DxState::SetState(ID3D11Device* pd3dDevice)
 bool K_DxState::Release()
 {
     if (g_pDefaultSS) g_pDefaultSS->Release();
+    if (g_pDefaultSSWrap) g_pDefaultSSWrap->Release();
+    if (g_pDefaultSSMirror) g_pDefaultSSMirror->Release();
+    if (g_pDefaultRSWireFrame) g_pDefaultRSWireFrame->Release();
+    if (g_pDefaultRSSolid) g_pDefaultRSSolid->Release();
+    if (g_pAlphaBlend) g_pAlphaBlend->Release();
+    if (g_pDefaultDepthStencil) g_pDefaultDepthStencil->Release();
+    if (g_pGreaterDepthStencil) g_pGreaterDepthStencil->Release();
+    if (g_pDisableDepthStencil) g_pDisableDepthStencil->Release();
+
     return true;
 }

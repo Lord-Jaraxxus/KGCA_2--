@@ -21,6 +21,6 @@ public:
 public:
 	ButtonState m_BS;
 	std::vector<K_Texture*> m_pTextureList;
-	bool IsDisable = false;
+	bool m_bIsDisable = false;
 };
 

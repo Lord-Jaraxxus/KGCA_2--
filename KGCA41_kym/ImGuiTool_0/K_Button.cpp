@@ -43,7 +43,7 @@ bool K_Button::SetState()
 	float mouseNdcX = (vMousePos.x / g_rtClient.right) * 2.0f - 1.0f; // 마우스 x좌표를 NDC좌표계로 변환
 	float mouseNdcY = -((vMousePos.y / g_rtClient.bottom) * 2.0f - 1.0f);
 
-	if (IsDisable) m_BS = DISABLE; //비활성화 
+	if (m_bIsDisable) m_BS = DISABLE; //비활성화 
 
 	else if (m_VertexList[0].p.x <= mouseNdcX && m_VertexList[3].p.x >= mouseNdcX &&
 			 m_VertexList[0].p.y >= mouseNdcY && m_VertexList[3].p.y <= mouseNdcY)

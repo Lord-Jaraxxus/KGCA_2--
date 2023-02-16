@@ -3,8 +3,10 @@
 
 struct CI // Cut Information
 {
-	ImVec2 uvTL; // UV Top&Left
-	ImVec2 uvBR; // UV Bottom&Right
+	ImVec2 pxWH; // pixel Width Height
+
+	ImVec2 uvTL; // UV Top & Left
+	ImVec2 uvBR; // UV Bottom & Right
 	
 	std::wstring tn; // Texture name
 	std::wstring sn; // Shader name
@@ -18,15 +20,12 @@ public:
 	virtual bool Frame() override;
 	virtual bool Release() override;
 	virtual bool UpdateCut();
-	virtual bool AddCut(ImVec2 uvTL, ImVec2 uvBR, std::wstring tn, std::wstring sn);
+	virtual bool AddCut(ImVec2 pxWH, ImVec2 uvTL, ImVec2 uvBR, std::wstring tn, std::wstring sn);
 
 public:
 	std::vector<CI*> m_pCutInfoList;
-	//std::vector<K_Texture*> m_pTextureList;
 	int m_iMaxFrame = 0;
-	int m_iCurrentFrame = 0;
-
-	int m_iCurrentFps = 0;
-	int m_iMaxFps = 3;
+	float m_fCurrentFrame = 0;
+	int m_iFrameSpeed = 30;
 };
 

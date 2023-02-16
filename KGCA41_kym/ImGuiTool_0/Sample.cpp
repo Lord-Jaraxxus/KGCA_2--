@@ -1,4 +1,5 @@
 #include "Sample.h"
+#include "K_DxState.h"
 
 bool Sample::Init() 
 {
@@ -35,9 +36,9 @@ bool Sample::Frame()
 			float randY = rand();
 			randX = ((randX / RAND_MAX) * 2) - 1.0f;
 			randY = (((randY / RAND_MAX) * 2) - 1.0f) * -1.0f;
-			CreateNewRect({ randX, randY }, { 1.0f, 1.0f });
+			CreateNewRect({ randX, randY }, { 1.0f, 1.0f }, 0.3f);
 		}
-		else CreateNewRect({ 0,0 }, {1.0f, 1.0f});
+		else CreateNewRect({ 0,0 }, {1.0f, 1.0f}, 0.3f);
 	}
 	ImGui::Checkbox(u8"란듐?", &IsRandom);
 	ImGui::Checkbox(u8"클릭한 위치에 네모 생성", &IsSelect);
@@ -45,15 +46,19 @@ bool Sample::Frame()
 	ImGui::Text(u8"버튼 생성");
 	if (ImGui::Button(u8"버튼 생성 버튼!")) 
 	{
-		CreateNewButton({ 0,0 }, { 0.5f, 0.5f });
+		CreateNewButton({ 0,0 }, { 0.5f, 0.5f }, 0.2f);
 	}
 	ImGui::Checkbox(u8"버튼 비활성화", &IsDisable);
 
 	ImGui::Text(u8"스프라이트 생성");
 	if (ImGui::Button(u8"스프라이트 생성 버튼"))
 	{
-		CreateNewSprite({ -0.5f, -0.5f }, { 0.5f, 0.5f });
+		CreateNewSprite({ -0.5f, 0.0f }, { 0.5f, 0.5f }, 0.1f);
 	}
+
+	ImGui::Checkbox(u8"와이어 프레임", &IsWireFrame);
+	ImGui::Checkbox(u8"깊이 버퍼 사용", &IsDepth);
+	ImGui::Checkbox(u8"알파블렌딩 사용", &IsAlphaBlend);
 
 	ImGui::End();
 
@@ -63,14 +68,21 @@ bool Sample::Frame()
 		m_CursorPos.y = I_Input.m_ptPos.y;
 		m_CursorPos.x = ((m_CursorPos.x / g_rtClient.right) * 2.0f) - 1.0f; // 마우스 좌표를 -1 ~ 1 사이로 변환
 		m_CursorPos.y = (((m_CursorPos.y / g_rtClient.bottom) * 2.0f) - 1.0f) * -1.0f; // 마우스 좌표를 -1 ~ 1 사이로 변환
-		CreateNewRect({ (float)m_CursorPos.x, (float)m_CursorPos.y }, { 1.0f, 1.0f });
+		CreateNewRect({ (float)m_CursorPos.x, (float)m_CursorPos.y }, { 1.0f, 1.0f }, 0.3f);
 	}
 	
 	for (auto button : m_pButtonList)
 	{
-		if (IsDisable) { button->IsDisable = true; }
-		else { button->IsDisable = false; }
+		if (IsDisable) { button->m_bIsDisable = true; }
+		else { button->m_bIsDisable = false; }
 	}
+
+	if (IsWireFrame) { K_DxState::g_pCurrentRS = K_DxState::g_pDefaultRSWireFrame; }
+	else { K_DxState::g_pCurrentRS = K_DxState::g_pDefaultRSSolid; }
+	if (IsDepth) { K_DxState::g_pCurrentDSS = K_DxState::g_pDefaultDepthStencil; }
+	else { K_DxState::g_pCurrentDSS = K_DxState::g_pDisableDepthStencil; }
+	if (IsAlphaBlend) { K_DxState::g_pCurrentBS = K_DxState::g_pAlphaBlend; }
+	else { K_DxState::g_pCurrentBS = K_DxState::g_pAlphaBlendDisable; }
 
 	for (auto UI : m_pUIList)
 	{
@@ -82,12 +94,16 @@ bool Sample::Frame()
 
 bool Sample::Render()
 {
-	//for (auto UI : m_pUIList){ UI->Render(); }
+	for (auto UI : m_pUIList) { UI->Render(); }
 
-	for (int i = m_pUIList.size(); i > 0; i--)
-	{
-		m_pUIList[i - 1]->Render();
-	}
+	//for (auto UI : m_pUIList)
+	//{
+	//	if (UI->m_fAlpha < 1.0f) { m_pUIAlphaList.push_back(UI); }
+	//	else UI->Render(); 
+	//}
+
+	//for (auto UIAlpha : m_pUIAlphaList){ UIAlpha->Render(); }
+	//m_pUIAlphaList.clear();
 
 	// Assemble Together Draw Data라는데뭔소리야
 	ImGui::Render();
@@ -109,18 +125,19 @@ bool Sample::Release()
 	return true; 
 }
 
-bool Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight)
+bool Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth)
 {
 	bool success;
 
 	K_UIObject* newRect = new K_UIObject;
-	success = newRect->Create(m_pd3dDevice, m_pImmediateContext, L"../../data/img/map.jpg", L"../../data/shader/DefaultObject.txt");
+	success = newRect->Create(m_pd3dDevice, m_pImmediateContext, L"../../data/img/map.jpg", L"../../data/shader/DefaultObject_Orgin.txt");
+	
 	if (success) 
 	{
 		m_pRectList.push_back(newRect);
 		m_pUIList.push_back(newRect);
 
-		newRect->SetPosition(orginPos, widthHeight);
+		newRect->SetPosition(orginPos, widthHeight, depth);
 		newRect->SetUV({ 0.0f, 0.0f }, { 1.0f, 1.0f });
 		newRect->UpdateVertexBuffer();
 	} 
@@ -128,12 +145,12 @@ bool Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight)
 	return success;
 }
 
-bool Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight)
+bool Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth)
 {
 	bool success;
 
 	K_Button* newButton = new K_Button;
-	success = newButton->Create(m_pd3dDevice, m_pImmediateContext, L"../../data/img/button/BatteryDead.png", L"../../data/shader/DefaultObject.txt");
+	success = newButton->Create(m_pd3dDevice, m_pImmediateContext, L"../../data/img/button/BatteryDead.png", L"../../data/shader/DefaultObject_Orgin.txt");
 	if (success)
 	{
 		m_pButtonList.push_back(newButton);
@@ -143,7 +160,7 @@ bool Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight)
 		newButton->AddTexture(L"../../data/img/button/BatteryClick.png");
 		newButton->AddTexture(L"../../data/img/button/BatteryDisable.png");
 
-		newButton->SetPosition(orginPos, widthHeight);
+		newButton->SetPosition(orginPos, widthHeight, depth);
 		newButton->SetUV({ 0.0f, 0.0f }, { 1.0f, 1.0f });
 		newButton->UpdateVertexBuffer();
 	}
@@ -151,44 +168,45 @@ bool Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight)
 	return success;
 }
 
-bool Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight)
+bool Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth)
 {
 	bool success;
 
 	K_Sprite* newSprite = new K_Sprite;
 	success = newSprite->Create(m_pd3dDevice, m_pImmediateContext, 
-		L"../../data/img/sprite/Golden/golden knight animation sword right edit_00001.png", L"../../data/shader/DefaultObject.txt");
+		L"../../data/img/sprite/Golden/golden knight animation sword right edit_00001.png", L"../../data/shader/DefaultObject_Orgin.txt");
 	
 	if (success)
 	{
 		m_pSpriteList.push_back(newSprite);
 		m_pUIList.push_back(newSprite);
 
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00001.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00002.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00003.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00004.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00005.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00006.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00007.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00008.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00009.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00010.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00011.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00012.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00013.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00014.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00015.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00016.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00017.png", L"../../data/shader/DefaultObject.txt");
-		newSprite->AddCut({0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00018.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00001.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00002.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00003.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00004.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00005.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00006.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00007.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00008.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00009.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00010.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00011.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00012.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00013.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00014.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00015.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00016.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00017.png", L"../../data/shader/DefaultObject.txt");
+		newSprite->AddCut({700, 500}, {0.0f, 0.0f}, {1.0f, 1.0f}, L"../../data/img/sprite/Golden/golden knight animation sword right edit_00018.png", L"../../data/shader/DefaultObject.txt");
 		newSprite->m_iMaxFrame = 18;
 
-
-		newSprite->SetPosition(orginPos, widthHeight);
+		newSprite->m_OrginPos = orginPos;
+		newSprite->SetPosition(orginPos, widthHeight, depth);
+		newSprite->SetAlpha(0.1f);
 		newSprite->UpdateVertexBuffer();
 	}
-
+	
 	return success;
 }
 

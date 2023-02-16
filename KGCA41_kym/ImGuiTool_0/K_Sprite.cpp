@@ -23,27 +23,21 @@ bool K_Sprite::Release()
 
 bool K_Sprite::UpdateCut()
 {
-	m_pTextureSRV = m_pCutInfoList[m_iCurrentFrame]->tc->m_pTextureSRV;
-	SetUV(m_pCutInfoList[m_iCurrentFrame]->uvTL, m_pCutInfoList[m_iCurrentFrame]->uvBR);
+	m_fCurrentFrame = m_fCurrentFrame + (g_fSecondPerFrame * m_iFrameSpeed);
+	if (m_fCurrentFrame >= m_iMaxFrame) { m_fCurrentFrame = 0.0f; }
+
+	m_pTextureSRV = m_pCutInfoList[m_fCurrentFrame]->tc->m_pTextureSRV;
+	SetPosition(m_OrginPos, PtoN(m_pCutInfoList[m_fCurrentFrame]->pxWH), m_fDepth);
+	SetUV(m_pCutInfoList[m_fCurrentFrame]->uvTL, m_pCutInfoList[m_fCurrentFrame]->uvBR);
 	UpdateVertexBuffer();
-
-	if (I_Timer.m_fFPSTimer > m_iCurrentFps / m_iMaxFps)
-	{
-		float fpstimer = I_Timer.m_fFPSTimer;
-
-		m_iCurrentFrame++;
-		if (m_iCurrentFrame >= m_iMaxFrame) { m_iCurrentFrame = 0; }
-
-		m_iCurrentFps++;
-		if (m_iCurrentFps >= m_iMaxFps) { m_iCurrentFps = 0; }
-	}
 
 	return true;
 }
 
-bool K_Sprite::AddCut(ImVec2 uvTL, ImVec2 uvBR, std::wstring tn, std::wstring sn)
+bool K_Sprite::AddCut(ImVec2 pxWH, ImVec2 uvTL, ImVec2 uvBR, std::wstring tn, std::wstring sn)
 {
 	CI* newCI = new CI;
+	newCI->pxWH = pxWH;
 	newCI->uvTL = uvTL;
 	newCI->uvBR = uvBR;
 	newCI->tn = tn;

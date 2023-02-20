@@ -11,7 +11,7 @@ public:
 
 public:
 	ImVec2 m_OrginPos;
-	ImVec2 m_WidthHeight;
+	ImVec2 m_WidthHeight; // ¿œ¥‹ NDC
 	float  m_fDepth = 0.0f;
 	float  m_fAlpha = 1.0f;
 

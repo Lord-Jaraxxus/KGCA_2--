@@ -120,10 +120,10 @@ namespace K_DX
 
     bool K_BaseObject::Release()
     {
-        if (m_pTexture) m_pTexture->Release();
+        //if (m_pTexture) m_pTexture->Release();    // 얘내 둘은 어차피 매니저가 처리해줄테니까? 
+        //if (m_pShader) m_pShader->Release(); 
         if (m_pVertexBuffer) m_pVertexBuffer->Release();
         if (m_pVertexLayout) m_pVertexLayout->Release();
-        if (m_pShader) m_pShader->Release();
 
         return true;
     }
@@ -290,6 +290,7 @@ namespace K_DX
             m_pPS = m_pShader->m_pPS;
             m_pVSCode = m_pShader->m_pVSCode;
             m_pPSCode = m_pShader->m_pPSCode;
+            m_szShaderName = filename;
             return true;
         }
 
@@ -363,7 +364,11 @@ namespace K_DX
     bool K_BaseObject::LoadTexture(std::wstring filename)
     {
         m_pTexture = I_Tex.Load(filename);
-        if (m_pTexture != nullptr) return true;
+        if (m_pTexture != nullptr)
+        {
+            m_szTextureName = filename;
+            return true;
+        }
 
         return false;
     }

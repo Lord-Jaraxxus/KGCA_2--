@@ -1,5 +1,8 @@
 #include "Sample.h"
 #include "K_DxState.h"
+#include <ShObjIdl.h> // 윈도우 파일탐색기
+#include <comdef.h> // const wchar* -> const char*에 사용
+#include <fstream>
 
 bool Sample::Init() 
 {
@@ -14,85 +17,26 @@ bool Sample::Init()
 	ImGui_ImplDX11_Init(m_pd3dDevice, m_pImmediateContext);
 	//ImGui::StyleColorsDark();
 	ImGui::StyleColorsLight();
+
+	I_Tex.Load(m_szImageFileName);
+
 	return true; 
 }
 
 bool Sample::Frame()
 {
-	//// 이무기 프레임 시작
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-	 
-	//// 이무기 테스트 윈도우 생성
-	ImGui::Begin(u8"UI Tool",&IsToolActive, ImGuiWindowFlags_MenuBar);
+	ImGuiFrame();
 
-	if (ImGui::BeginMenuBar())
+	if (IsClear) // 새로 만들기 눌렀을때
 	{
-		if (ImGui::BeginMenu(u8"파일"))
-		{
-			if (ImGui::MenuItem(u8"새로 만들기", "Ctrl+N")) { IsClear = true; }
-			if (ImGui::MenuItem(u8"열기", "Ctrl+O")) { /* Do stuff */ }
-			if (ImGui::MenuItem(u8"저장", "Ctrl+S")) { /* Do stuff */ }
-			ImGui::EndMenu();
-		}
-		ImGui::EndMenuBar();
+		for (auto UI : m_pUIList) { UI->Release(); }
+		m_pUIList.clear();
+		m_pRectList.clear();
+		m_pButtonList.clear();
+		m_pSpriteList.clear();
+
+		IsClear = false;
 	}
-
-	if (ImGui::CollapsingHeader(u8"이미지", nullptr)) // 접을 수 있는 헤더
-	{
-		ImGui::InputFloat2(u8"x,y (NDC) - image", ImageXY);
-		ImGui::InputFloat2(u8"Depth,Alpha - image", ImageDA);
-
-		ImGui::Checkbox(u8"랜덤 위치에 이미지 생성", &IsRandom);
-		ImGui::Checkbox(u8"클릭한 위치에 이미지 생성", &IsSelect);
-
-		if (ImGui::Button(u8"이미지 생성 버튼")) // 버튼이 눌렸다면
-		{
-			if (IsRandom) // -1 ~ 1 사이의 랜덤 xy좌표 생성
-			{
-				float randX = rand();
-				float randY = rand();
-				randX = ((randX / RAND_MAX) * 2) - 1.0f;
-				randY = (((randY / RAND_MAX) * 2) - 1.0f) * -1.0f;
-				CreateNewRect({ randX, randY }, { 1.0f, 1.0f }, ImageDA[0], ImageDA[1]);
-			}
-			else CreateNewRect( {ImageXY[0],ImageXY[1]} , { 1.0f, 1.0f }, ImageDA[0], ImageDA[1]);
-		}
-	}
-
-	if (ImGui::CollapsingHeader(u8"버튼", nullptr)) 
-	{
-		ImGui::InputFloat2(u8"x,y (NDC) - button", ButtonXY);
-		ImGui::InputFloat2(u8"Depth,Alpha - button", ButtonDA);
-
-		if (ImGui::Button(u8"버튼 생성 버튼!"))
-		{
-			CreateNewButton({ ButtonXY[0], ButtonXY[1] }, { 0.5f, 0.5f }, ButtonDA[0], ButtonDA[1]);
-		}
-		ImGui::Checkbox(u8"버튼 비활성화", &IsDisable);
-	}
-
-	if (ImGui::CollapsingHeader(u8"스프라이트", nullptr)) 
-	{
-		ImGui::InputFloat2(u8"x,y (NDC) - sprite", SpriteXY);
-		ImGui::InputFloat2(u8"Depth,Alpha - sprite", SpriteDA);
-
-		ImGui::Text(u8"스프라이트 생성");
-		if (ImGui::Button(u8"스프라이트 생성 버튼"))
-		{
-			CreateNewSprite({ SpriteXY[0], SpriteXY[1] }, { 0.5f, 0.5f }, SpriteDA[0], SpriteDA[1]);
-		}
-	}
-
-	if (ImGui::CollapsingHeader(u8"상태 변환", nullptr)) 
-	{
-		ImGui::Checkbox(u8"와이어 프레임 사용", &IsWireFrame);
-		ImGui::Checkbox(u8"깊이 버퍼 사용", &IsDepth);
-		ImGui::Checkbox(u8"알파블렌딩 사용", &IsAlphaBlend);
-	}
-
-	ImGui::End();
 
 	if (I_Input.GetKey(VK_LBUTTON) == KEY_PUSH && IsSelect)
 	{
@@ -128,12 +72,6 @@ bool Sample::Render()
 {
 	for (auto UI : m_pUIList) { UI->Render(); }
 
-	//for (auto UI : m_pUIList)
-	//{
-	//	if (UI->m_fAlpha < 1.0f) { m_pUIAlphaList.push_back(UI); }
-	//	else UI->Render(); 
-	//}
-
 	//for (auto UIAlpha : m_pUIAlphaList){ UIAlpha->Render(); }
 	//m_pUIAlphaList.clear();
 
@@ -157,12 +95,111 @@ bool Sample::Release()
 	return true; 
 }
 
+void Sample::ImGuiFrame()
+{
+	//// 이무기 프레임 시작
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
+	//// 이무기 테스트 윈도우 생성
+	ImGui::Begin(u8"UI Tool", &IsToolActive, ImGuiWindowFlags_MenuBar);
+
+	if (ImGui::BeginMenuBar())
+	{
+		if (ImGui::BeginMenu(u8"파일"))
+		{
+			if (ImGui::MenuItem(u8"새로 만들기", "Ctrl+N")) { IsClear = true; }
+			if (ImGui::MenuItem(u8"열기", "Ctrl+O")) //{ m_szFileName = FileOpen(); }
+			{
+				m_szFileName = FileOpen();
+				I_Tex.Load(m_szFileName);
+			}
+			if (ImGui::MenuItem(u8"저장", "Ctrl+S")) { FileSave(L"aaa.txt"); }
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
+
+	if (ImGui::CollapsingHeader(u8"이미지", nullptr)) // 접을 수 있는 헤더
+	{
+		// 선택한 이미지와 이미지 이름
+		ImVec2 imageSize(100.0f, 100.0f);
+		ImGui::Image(I_Tex.Find(m_szImageFileName)->GetSRV(), imageSize, { 0,0 }, { 1,1 }, { 1,1,1,1 }, { 0,0,0,1 });
+		ImGui::SameLine();
+		_bstr_t fileName(m_szImageFileName.c_str());
+		ImGui::Text(fileName);
+		if (ImGui::Button(u8"이미지 가져오기")) 
+		{
+			std::wstring newFileName = FileOpen();
+			if (newFileName != L"") // 취소 눌렀으면 거르려고
+			{ 
+				m_szImageFileName = newFileName;
+				I_Tex.Load(m_szImageFileName); 
+			}
+		}
+
+		ImGui::InputFloat2(u8"x,y (NDC) - image", ImageXY);
+		ImGui::InputFloat2(u8"Width,Height (NDC) - image", ImageWH);
+		ImGui::InputFloat2(u8"Depth,Alpha - image", ImageDA);
+
+		ImGui::Checkbox(u8"랜덤 위치에 이미지 생성", &IsRandom);
+		ImGui::Checkbox(u8"클릭한 위치에 이미지 생성", &IsSelect);
+
+		if (ImGui::Button(u8"이미지 생성 버튼")) // 버튼이 눌렸다면
+		{
+			if (IsRandom) // -1 ~ 1 사이의 랜덤 xy좌표 생성
+			{
+				float randX = rand();
+				float randY = rand();
+				randX = ((randX / RAND_MAX) * 2) - 1.0f;
+				randY = (((randY / RAND_MAX) * 2) - 1.0f) * -1.0f;
+				CreateNewRect({ randX, randY }, { ImageWH[0], ImageWH[1] }, ImageDA[0], ImageDA[1]);
+			}
+			else CreateNewRect({ ImageXY[0],ImageXY[1] }, { ImageWH[0], ImageWH[1] }, ImageDA[0], ImageDA[1]);
+		}
+	}
+
+	if (ImGui::CollapsingHeader(u8"버튼", nullptr))
+	{
+		ImGui::InputFloat2(u8"x,y (NDC) - button", ButtonXY);
+		ImGui::InputFloat2(u8"Depth,Alpha - button", ButtonDA);
+
+		if (ImGui::Button(u8"버튼 생성 버튼!"))
+		{
+			CreateNewButton({ ButtonXY[0], ButtonXY[1] }, { 0.5f, 0.5f }, ButtonDA[0], ButtonDA[1]);
+		}
+		ImGui::Checkbox(u8"버튼 비활성화", &IsDisable);
+	}
+
+	if (ImGui::CollapsingHeader(u8"스프라이트", nullptr))
+	{
+		ImGui::InputFloat2(u8"x,y (NDC) - sprite", SpriteXY);
+		ImGui::InputFloat2(u8"Depth,Alpha - sprite", SpriteDA);
+
+		ImGui::Text(u8"스프라이트 생성");
+		if (ImGui::Button(u8"스프라이트 생성 버튼"))
+		{
+			CreateNewSprite({ SpriteXY[0], SpriteXY[1] }, { 0.5f, 0.5f }, SpriteDA[0], SpriteDA[1]);
+		}
+	}
+
+	if (ImGui::CollapsingHeader(u8"상태 변환", nullptr))
+	{
+		ImGui::Checkbox(u8"와이어 프레임 사용", &IsWireFrame);
+		ImGui::Checkbox(u8"깊이 버퍼 사용", &IsDepth);
+		ImGui::Checkbox(u8"알파블렌딩 사용", &IsAlphaBlend);
+	}
+
+	ImGui::End();
+}
+
 bool Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha)
 {
 	bool success;
 
 	K_UIObject* newRect = new K_UIObject;
-	success = newRect->Create(m_pd3dDevice, m_pImmediateContext, L"../../data/img/map.jpg", L"../../data/shader/DefaultObject_Orgin.txt");
+	success = newRect->Create(m_pd3dDevice, m_pImmediateContext, m_szImageFileName, L"../../data/shader/DefaultObject_Orgin.txt");
 	
 	if (success) 
 	{
@@ -242,6 +279,115 @@ bool Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, f
 	}
 	
 	return success;
+}
+
+std::wstring Sample::FileOpen()
+{
+	IFileDialog* pFileDialog = NULL;
+	HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL, IID_IFileDialog, (void**)&pFileDialog);
+	std::wstring fileName = L"";
+
+	if (SUCCEEDED(hr)) {
+		// Set file type filter
+		COMDLG_FILTERSPEC fileTypes[] = { { L"All Files", L"*.*" } };
+		pFileDialog->SetFileTypes(1, fileTypes);
+
+		// Show the dialog box
+		if (SUCCEEDED(pFileDialog->Show(NULL))) {
+			// Get the file name
+			IShellItem* pShellItem;
+			if (SUCCEEDED(pFileDialog->GetResult(&pShellItem))) {
+				PWSTR filePath;
+				if (SUCCEEDED(pShellItem->GetDisplayName(SIGDN_FILESYSPATH, &filePath))) {
+					std::wstring filePathStr(filePath);
+					CoTaskMemFree(filePath);
+					fileName = filePathStr;
+				}
+				pShellItem->Release();
+			}
+		}
+		pFileDialog->Release();
+	}
+
+	return fileName;
+}
+
+void Sample::FileSave(std::wstring saveFileName)
+{
+	HRESULT hr;
+	IFileDialog* pfd;
+
+	hr = CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd));
+	if (FAILED(hr))
+	{
+		// Handle the error
+		return;
+	}
+
+	// Set the default file extension to .txt
+	pfd->SetDefaultExtension(L"txt");
+
+	// Set the file name
+	pfd->SetFileName(saveFileName.c_str());
+
+	// Show the save dialog
+	hr = pfd->Show(NULL);
+	if (FAILED(hr))
+	{
+		// Handle the error
+		pfd->Release();
+		return;
+	}
+
+	// Get the selected file name
+	IShellItem* psiResult;
+	hr = pfd->GetResult(&psiResult);
+	if (FAILED(hr))
+	{
+		// Handle the error
+		pfd->Release();
+		return;
+	}
+
+	PWSTR pszFilePath;
+	hr = psiResult->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+	if (FAILED(hr))
+	{
+		// Handle the error
+		psiResult->Release();
+		pfd->Release();
+		return;
+	}
+
+	std::wstring szFilePath(pszFilePath);
+	std::string sFilePath = to_wm(szFilePath);
+
+	// Open the file and write some text
+	std::ofstream outfile(sFilePath);
+	if (outfile.is_open())
+	{
+		for (auto UI : m_pUIList) 
+		{
+			outfile << "Texture\t";
+			outfile << to_wm(UI->m_szTextureName);
+			outfile << "\n";
+
+			outfile << "Shader\t";
+			outfile << to_wm(UI->m_szShaderName);
+			outfile << "\n";
+
+			outfile << "\n";
+		}
+		outfile << "This is some text that will be written to the file.\n";
+		outfile.close();
+	}
+
+	// Clean up
+	CoTaskMemFree(pszFilePath);
+	psiResult->Release();
+	pfd->Release();
+
+	return;
 }
 
 

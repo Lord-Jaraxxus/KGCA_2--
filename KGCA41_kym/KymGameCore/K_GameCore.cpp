@@ -82,7 +82,7 @@ bool K_GameCore::K_GameCoreRender()
         m_RT.End(); // ¹Ù²Û ·»´õÅ¸°ÙÀÌ¶û ºäÆ÷Æ®¸¦ ¿ø·¡²¬·Î µÇµ¹¸²
     }
 
-    if (m_RT.m_pSRV) m_BG.m_pTextureSRV = m_RT.m_pSRV; // ±×·ÁÁø ÅØ½ºÃ³¸¦ m_BGÀÇ ÅØ½ºÃ³(map.jpg)¶û ¹Ù²ã³¢¿öÁÜ
+    if (m_RT.m_pSRV) { m_BG.m_pTextureSRV = m_RT.m_pSRV; } // ±×·ÁÁø ÅØ½ºÃ³¸¦ m_BGÀÇ ÅØ½ºÃ³(map.jpg)¶û ¹Ù²ã³¢¿öÁÜ
 
     K_GameCorePostRender();
 

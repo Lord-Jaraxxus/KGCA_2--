@@ -25,6 +25,8 @@ bool K_UIObject::SetPosition(ImVec2 orginPos, ImVec2 widthHeight, float depth) /
 	m_VertexList[2].p = { orginPos.x - widthHeight.x / 2, orginPos.y - widthHeight.y / 2, depth };
 	m_VertexList[3].p = { orginPos.x + widthHeight.x / 2, orginPos.y - widthHeight.y / 2, depth };
 
+	m_OrginPos = orginPos;
+	m_WidthHeight = widthHeight;
 	m_fDepth = depth;
 
 	return true;

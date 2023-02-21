@@ -1,0 +1,56 @@
+Type	0
+ID	1
+OrginPos	0.000000 0.000000
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
+=
+Type	0
+ID	2
+OrginPos	0.000000 0.000000
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\1.png | ../../data/shader/DefaultObject_Orgin.txt
+=
+Type	0
+ID	3
+OrginPos	0.650000 0.606667
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
+=
+Type	0
+ID	4
+OrginPos	-0.480000 0.542222
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
+=
+Type	0
+ID	5
+OrginPos	-0.575000 -0.591111
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
+=
+Type	0
+ID	6
+OrginPos	0.472500 -0.597778
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
+=
+Type	0
+ID	7
+OrginPos	1.257500 0.311111
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
+=

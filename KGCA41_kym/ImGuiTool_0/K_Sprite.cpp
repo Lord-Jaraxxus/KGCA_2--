@@ -34,20 +34,3 @@ bool K_Sprite::UpdateCut()
 	return true;
 }
 
-bool K_Sprite::AddCut(ImVec2 pxWH, ImVec2 uvTL, ImVec2 uvBR, std::wstring tn, std::wstring sn)
-{
-	CI* newCI = new CI;
-	newCI->pxWH = pxWH;
-	newCI->uvTL = uvTL;
-	newCI->uvBR = uvBR;
-	newCI->tn = tn;
-	newCI->sn = sn;
-
-	K_Texture* newTexture = I_Tex.Load(tn);
-	if (newTexture == nullptr) { return false; }
-	
-	newCI->tc = newTexture;
-	m_pCutInfoList.push_back(newCI);
-
-	return true;
-}

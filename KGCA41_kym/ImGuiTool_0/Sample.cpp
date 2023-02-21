@@ -1,8 +1,9 @@
 #include "Sample.h"
 #include "K_DxState.h"
+#include "K_TextureManager.h" // GetSplitName 이것땜에 갖고옴 ㅋ;
 #include <ShObjIdl.h> // 윈도우 파일탐색기
 #include <comdef.h> // const wchar* -> const char*에 사용
-#include <fstream>
+//#include <fstream> // UI 오브젝트 헤더로 이동
 
 bool Sample::Init() 
 {
@@ -27,16 +28,7 @@ bool Sample::Frame()
 {
 	ImGuiFrame();
 
-	if (IsClear) // 새로 만들기 눌렀을때
-	{
-		for (auto UI : m_pUIList) { UI->Release(); }
-		m_pUIList.clear();
-		m_pRectList.clear();
-		m_pButtonList.clear();
-		m_pSpriteList.clear();
-
-		IsClear = false;
-	}
+	if (IsClear) { Clear(); } // 새로 만들기 눌렀을때
 
 	if (I_Input.GetKey(VK_LBUTTON) == KEY_PUSH && IsSelect)
 	{
@@ -110,12 +102,8 @@ void Sample::ImGuiFrame()
 		if (ImGui::BeginMenu(u8"파일"))
 		{
 			if (ImGui::MenuItem(u8"새로 만들기", "Ctrl+N")) { IsClear = true; }
-			if (ImGui::MenuItem(u8"열기", "Ctrl+O")) //{ m_szFileName = FileOpen(); }
-			{
-				m_szFileName = FileOpen();
-				I_Tex.Load(m_szFileName);
-			}
-			if (ImGui::MenuItem(u8"저장", "Ctrl+S")) { FileSave(L"aaa.txt"); }
+			if (ImGui::MenuItem(u8"열기", "Ctrl+O")) { FileLoad(); }
+			if (ImGui::MenuItem(u8"저장", "Ctrl+S")) { FileSave(m_szFileName); }
 			ImGui::EndMenu();
 		}
 		ImGui::EndMenuBar();
@@ -210,6 +198,11 @@ bool Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, flo
 		newRect->SetAlpha(alpha);
 		newRect->SetUV({ 0.0f, 0.0f }, { 1.0f, 1.0f });
 		newRect->UpdateVertexBuffer();
+		newRect->m_Type = IMAGE;
+		newRect->m_ID = m_CurrentID;
+		m_CurrentID++;
+
+		newRect->AddCut(newRect->m_WidthHeight, { 0,0 }, { 1,1 }, newRect->m_szTextureName, newRect->m_szShaderName);
 	} 
 
 	return success;
@@ -234,6 +227,9 @@ bool Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, f
 		newButton->SetAlpha(alpha);
 		newButton->SetUV({ 0.0f, 0.0f }, { 1.0f, 1.0f });
 		newButton->UpdateVertexBuffer();
+		newButton->m_Type = IMAGE;
+		newButton->m_ID = m_CurrentID;
+		m_CurrentID++;
 	}
 
 	return success;
@@ -276,9 +272,24 @@ bool Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, f
 		newSprite->SetPosition(orginPos, widthHeight, depth);
 		newSprite->SetAlpha(alpha);
 		newSprite->UpdateVertexBuffer();
+		newSprite->m_Type = IMAGE;
+		newSprite->m_ID = m_CurrentID;
+		m_CurrentID++;
 	}
 	
 	return success;
+}
+
+void Sample::Clear()
+{
+	for (auto UI : m_pUIList) { UI->Release(); }
+	m_pUIList.clear();
+	m_pRectList.clear();
+	m_pButtonList.clear();
+	m_pSpriteList.clear();
+
+	m_CurrentID = 1;
+	IsClear = false;
 }
 
 std::wstring Sample::FileOpen()
@@ -311,6 +322,7 @@ std::wstring Sample::FileOpen()
 
 	return fileName;
 }
+
 
 void Sample::FileSave(std::wstring saveFileName)
 {
@@ -366,19 +378,7 @@ void Sample::FileSave(std::wstring saveFileName)
 	std::ofstream outfile(sFilePath);
 	if (outfile.is_open())
 	{
-		for (auto UI : m_pUIList) 
-		{
-			outfile << "Texture\t";
-			outfile << to_wm(UI->m_szTextureName);
-			outfile << "\n";
-
-			outfile << "Shader\t";
-			outfile << to_wm(UI->m_szShaderName);
-			outfile << "\n";
-
-			outfile << "\n";
-		}
-		outfile << "This is some text that will be written to the file.\n";
+		for (auto UI : m_pUIList) { UI->Save(outfile); }
 		outfile.close();
 	}
 
@@ -391,7 +391,147 @@ void Sample::FileSave(std::wstring saveFileName)
 }
 
 
+void Sample::FileLoad()
+{
+	Clear();
 
+	std::wstring newFileName = FileOpen();
+	if (newFileName == L"") return;
+
+	m_szFileName = I_Tex.GetSplitName(newFileName);
+	m_szFileContent = FileReadToString(newFileName);
+	m_splitContent = SplitString(m_szFileContent, L"="); // 일단 오브젝트 단위로 쪼갬
+	
+	UIType	Type;
+	int		ID;
+	ImVec2	OrginPos;
+	float	Depth;
+	float	Alpha;
+
+	std::vector<CI> cutInfoList;
+	int cutNum;
+	ImVec2 WidthHeight;
+	ImVec2 uvTL;
+	ImVec2 uvBR;
+	std::wstring TextureName;
+	std::wstring ShaderName;
+
+	for (auto obj : m_splitContent) 
+	{
+		std::vector<std::wstring> objContent = SplitString(obj, L"\n");
+		if (objContent.size() == 0) { continue; }
+
+		for (auto line : objContent) 
+		{
+			std::vector<std::wstring> LineContent = SplitString(line, L"\t");
+
+			if (LineContent.size() == 0) { continue; }
+			else if (LineContent[0] == L"Type") { Type = (UIType)std::stoi(LineContent[1]); }
+			else if (LineContent[0] == L"ID") { ID = std::stoi(LineContent[1]); }
+			else if (LineContent[0] == L"OrginPos") 
+			{ 
+				std::vector<std::wstring> OrginPosContent = SplitString(LineContent[1], L" ");
+				OrginPos[0] = std::stof(OrginPosContent[0]);
+				OrginPos[1] = std::stof(OrginPosContent[1]);
+			}
+			else if (LineContent[0] == L"Depth") { Depth = std::stof(LineContent[1]); }
+			else if (LineContent[0] == L"Alpha") { Alpha = std::stof(LineContent[1]); }
+			// else if (LineContent[0] == L"CutNum") { cutNum = std::stoi(LineContent[1]); } // 얘는 사실 필요없을지도?
+			else if (LineContent[0] == L"CutInfo") 
+			{
+				std::vector<std::wstring> ciContent = SplitString(LineContent[1], L"|");
+
+				CI newCutInfo;
+
+				std::vector<std::wstring> cutNumContent = SplitString(ciContent[0], L" ");
+				newCutInfo.cn = std::stoi(cutNumContent[0]);
+
+				std::vector<std::wstring> cutWHContent = SplitString(ciContent[1], L" ");
+				newCutInfo.pxWH.x = std::stof(cutWHContent[0]);
+				newCutInfo.pxWH.y = std::stof(cutWHContent[1]);
+
+				std::vector<std::wstring> cutUVContent = SplitString(ciContent[2], L" ");
+				newCutInfo.uvTL.x = std::stof(cutUVContent[0]);
+				newCutInfo.uvTL.y = std::stof(cutUVContent[1]);
+				newCutInfo.uvBR.x = std::stof(cutUVContent[2]);
+				newCutInfo.uvBR.y = std::stof(cutUVContent[3]);
+
+				std::vector<std::wstring> cutTNContent = SplitString(ciContent[3], L" ");
+				newCutInfo.tn = cutTNContent[0];
+
+				std::vector<std::wstring> cutSNContent = SplitString(ciContent[4], L" ");
+				newCutInfo.sn = cutSNContent[0];
+
+				cutInfoList.push_back(newCutInfo);
+			}
+		}
+		
+		// 여기서 UI 오브젝트 생성
+		if (Type == 0) 
+		{
+			K_UIObject* newRect = new K_UIObject;
+			for (auto CI : cutInfoList) { newRect->AddCut(CI); }
+			bool success = newRect->Create(m_pd3dDevice, m_pImmediateContext, cutInfoList[0].tn, cutInfoList[0].sn);
+
+			if (success)
+			{
+				m_pRectList.push_back(newRect);
+				m_pUIList.push_back(newRect);
+
+				newRect->SetPosition(OrginPos, cutInfoList[0].pxWH, Depth);
+				newRect->SetAlpha(Alpha);
+				newRect->SetUV(cutInfoList[0].uvTL, cutInfoList[0].uvBR);
+				newRect->UpdateVertexBuffer();
+				newRect->m_Type = Type;
+				newRect->m_ID = ID;
+				m_CurrentID = ID;
+			}
+		}
+		cutInfoList.clear();
+	}
+	m_CurrentID++;
+}
+
+std::wstring Sample::FileReadToString(std::wstring readFileName)
+{
+	std::ifstream file(readFileName);
+	if (!file.is_open()) {
+		// handle file open error
+	}
+
+	std::string fileContents;
+	std::string line;
+	while (std::getline(file, line)) {
+		fileContents += line + "\n";
+	}
+	file.close();
+
+	return to_mw(fileContents);
+}
+
+std::vector<std::wstring> Sample::SplitString(std::wstring inputStr, std::wstring delimiter)
+{
+	std::vector<std::wstring> substrings;
+
+	size_t pos = 0;
+
+	while (pos < inputStr.length()) {
+		size_t next_delim = inputStr.find_first_of(delimiter, pos);
+		if (next_delim == std::wstring::npos) {
+			next_delim = inputStr.length();
+		}
+		if (inputStr.substr(pos, next_delim - pos) != L"") 
+		{ substrings.push_back(inputStr.substr(pos, next_delim - pos)); }
+		pos = next_delim + 1;
+	}
+
+	// Print the resulting substrings vector
+	for (const auto& substring : substrings) {
+		std::wcout << substring << std::endl;
+	}
+
+	return substrings;
+}
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,

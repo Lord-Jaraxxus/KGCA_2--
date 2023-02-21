@@ -1,10 +1,10 @@
 Texture	D://KGCA_2//data//img//charport.bmp
 Shader	../../data/shader/DefaultObject_Orgin.txt
 
-Texture	D:\KGCA_2\data\img\2.png
+Texture	D:\KGCA_2\data\img\1.png
 Shader	../../data/shader/DefaultObject_Orgin.txt
 
-Texture	D:\KGCA_2\data\img\3.png
+Texture	D:\KGCA_2\data\img\2.png
 Shader	../../data/shader/DefaultObject_Orgin.txt
 
 This is some text that will be written to the file.

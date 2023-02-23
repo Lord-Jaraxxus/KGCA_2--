@@ -1,0 +1,8 @@
+Type	0
+ID	1
+OrginPos	0.000000 0.000000
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 128.000000 128.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
+=

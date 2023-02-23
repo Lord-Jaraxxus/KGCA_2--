@@ -4,6 +4,8 @@
 bool K_Button::Frame() 
 {
 	SetState();
+
+	if (m_pCutInfoList.size() == 0) return false;
 	m_pTextureSRV = m_pCutInfoList[m_BS]->tc->GetSRV();
 	
 	SetPosition(m_OrginPos, PtoN(m_pCutInfoList[m_BS]->pxWH), m_fDepth);

@@ -44,6 +44,9 @@ bool Sample::Frame()
 
 	if (IsClear) { Clear(); } // 새로 만들기 눌렀을때
 
+	HierarchyFrame();
+
+
 	if (I_Input.GetKey(VK_LBUTTON) == KEY_PUSH && IsSelect)
 	{
 		m_CursorPos.x = I_Input.m_ptPos.x;
@@ -53,7 +56,7 @@ bool Sample::Frame()
 
 		K_UIObject* newRect;
 		newRect = CreateNewRect({ (float)m_CursorPos.x, (float)m_CursorPos.y }, AtoV(ImageWH), ImageDA[0], ImageDA[1]);
-		newRect->AddCut(K_UIObject::PtoN(AtoV(ImageWH)), AtoV(ImageUV[0]), AtoV(ImageUV[1]), m_szImageFileName, m_szDefaultShaderName);
+		newRect->AddCut(AtoV(ImageWH), AtoV(ImageUV[0]), AtoV(ImageUV[1]), m_szImageFileName, m_szDefaultShaderName);
 	}
 	
 	for (auto button : m_pButtonList)
@@ -167,7 +170,7 @@ void Sample::ImGuiFrame()
 			}
 			else newRect = CreateNewRect( AtoV(ImageXY), AtoV(ImageWH), ImageDA[0], ImageDA[1]);
 
-			newRect->AddCut(K_UIObject::PtoN(AtoV(ImageWH)), AtoV(ImageUV[0]), AtoV(ImageUV[1]), m_szImageFileName, m_szDefaultShaderName);
+			newRect->AddCut(AtoV(ImageWH), AtoV(ImageUV[0]), AtoV(ImageUV[1]), m_szImageFileName, m_szDefaultShaderName);
 		}
 	}
 
@@ -309,6 +312,104 @@ void Sample::ImGuiFrame()
 	ImGui::End();
 }
 
+void Sample::HierarchyFrame()
+{
+	ImGui::Begin(u8"아웃라이너");
+	ImGui::PushItemWidth(150); // 입력창 너비 설정
+
+	//_bstr_t fileName(m_szFileName.c_str());
+	//if (ImGui::CollapsingHeader(fileName, ImGuiTreeNodeFlags_DefaultOpen)) 
+	//{
+	//	for (auto UI : m_pUIList)
+	//	{
+	//		_bstr_t UI_ID(std::to_wstring(UI->m_ID).c_str());
+	//		if (ImGui::TreeNodeEx(UI_ID))
+	//		{
+	//			if (UI->m_Type == IMAGE) 
+	//			{
+	//				ImGui::Image(UI->m_pCutInfoList[0]->tc->GetSRV(), { 100.0f, 100.0f }, { 0,0 }, { 1,1 }, { 1,1,1,1 }, { 0,0,0,1 });
+	//				ImGui::SameLine();
+	//				_bstr_t fileName(UI->m_pCutInfoList[0]->tn.c_str());
+	//				if (ImGui::Button(fileName))
+	//				{
+	//					std::wstring newFileName = FileOpen();
+	//					if (newFileName != L"") // 취소 눌렀으면 거르려고
+	//					{
+	//						UI->m_pCutInfoList[0]->tn = newFileName;
+	//						UI->m_pCutInfoList[0]->tc = I_Tex.Load(newFileName);
+	//					}
+	//				}
+	//				ImGui::InputFloat2("##" + UI_ID + "op", &UI->m_OrginPos.x );
+	//				ImGui::SameLine();
+	//				ImGui::Text(u8"원점 x,y 좌표 (NDC)");
+	//				ImGui::InputFloat2("##" + UI_ID + "wh", &UI->m_pCutInfoList[0]->pxWH.x);
+	//				ImGui::SameLine();
+	//				ImGui::Text(u8"이미지 크기 (픽셀)");
+	//				ImGui::InputFloat2("##" + UI_ID + "uvTL", &UI->m_pCutInfoList[0]->uvTL.x);
+	//				ImGui::SameLine();
+	//				ImGui::InputFloat2("##" + UI_ID + "uvBR", &UI->m_pCutInfoList[0]->uvBR.x);
+	//				ImGui::SameLine();
+	//				ImGui::Text(u8"UV 좌표 (좌상단, 우하단)");
+	//				ImGui::InputFloat2("##" + UI_ID + "d", &UI->m_fDepth);
+	//				ImGui::SameLine();
+	//				ImGui::Text(u8"깊이, 알파");
+	//			}
+
+	//			ImGui::TreePop();
+	//		}
+	//	}
+	//}
+
+	if (ImGui::TreeNodeEx("Node", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		if (ImGui::IsItemClicked(1))
+		{
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::OpenPopup("Popup Menu 1");
+			}
+			else
+			{
+				ImGui::OpenPopup("Popup Menu 2");
+			}
+		}
+
+		if (ImGui::BeginPopup("Popup Menu 1"))
+		{
+			if (ImGui::MenuItem("Option 1"))
+			{
+				// Handle option 1 selection
+			}
+			if (ImGui::MenuItem("Option 2"))
+			{
+				// Handle option 2 selection
+			}
+			ImGui::EndPopup();
+		}
+
+		if (ImGui::BeginPopup("Popup Menu 2"))
+		{
+			if (ImGui::MenuItem("Option 3"))
+			{
+				// Handle option 3 selection
+			}
+			if (ImGui::MenuItem("Option 4"))
+			{
+				// Handle option 4 selection
+			}
+			ImGui::EndPopup();
+		}
+
+		// Add child nodes here
+
+		ImGui::TreePop();
+	}
+
+
+	ImGui::PopItemWidth();
+	ImGui::End();
+}
+
 K_UIObject* Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha)
 {
 	bool success;
@@ -324,7 +425,6 @@ K_UIObject* Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float dep
 		newRect->SetPosition(orginPos, K_UIObject::PtoN(widthHeight), depth);
 		newRect->SetAlpha(alpha);
 		newRect->SetUV(AtoV(ImageUV[0]), AtoV(ImageUV[1]));
-		newRect->UpdateVertexBuffer();
 		newRect->m_Type = IMAGE;
 		newRect->m_ID = m_CurrentID;
 		m_CurrentID++;
@@ -665,6 +765,12 @@ std::vector<std::wstring> Sample::SplitString(std::wstring inputStr, std::wstrin
 ImVec2 Sample::AtoV(float array[2])
 {
 	return ImVec2(array[0], array[1]);
+}
+
+float* Sample::VtoA(ImVec2 vector)
+{
+	float array[2] = { vector[0],vector[1] };
+	return array;
 }
 
 

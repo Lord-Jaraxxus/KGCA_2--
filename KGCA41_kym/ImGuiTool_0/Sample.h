@@ -15,6 +15,7 @@ public:
 	bool Release();
 
 	void ImGuiFrame();
+	void HierarchyFrame();
 
 public:
 	std::vector<K_UIObject*> m_pUIList;
@@ -73,5 +74,6 @@ public:
 	std::vector<std::wstring> SplitString(std::wstring inputStr, std::wstring delimiter);
 
 	ImVec2 AtoV(float array[2]);
+	float* VtoA(ImVec2 vector);
 }; 
 

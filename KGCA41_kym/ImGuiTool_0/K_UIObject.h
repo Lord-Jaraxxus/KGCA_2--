@@ -27,6 +27,9 @@ struct CI // Cut Information
 class K_UIObject : public K_BaseObject
 {
 public:
+	virtual bool	Frame() override;
+
+public:
 	virtual bool	SetUV(ImVec2 uvTL, ImVec2 uvBR);
 	virtual bool	SetPosition(ImVec2 orginPos, ImVec2 widthHeight, float depth);
 	virtual bool	SetAlpha(float alpha);

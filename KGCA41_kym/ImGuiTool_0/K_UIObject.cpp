@@ -1,6 +1,17 @@
 #include "K_UIObject.h"
 #include <d3d11.h>
 
+bool K_UIObject::Frame()
+{
+	if (m_pCutInfoList.size() == 0) return false;
+	m_pTextureSRV = m_pCutInfoList[0]->tc->GetSRV();
+
+	SetPosition(m_OrginPos, PtoN(m_pCutInfoList[0]->pxWH), m_fDepth);
+	SetUV(m_pCutInfoList[0]->uvTL, m_pCutInfoList[0]->uvBR);
+	UpdateVertexBuffer();
+	return true;
+}
+
 bool K_UIObject::SetUV(ImVec2 uvTL, ImVec2 uvBR)
 {
 	m_VertexList[0].t.x = uvTL.x;
@@ -159,5 +170,5 @@ bool K_UIObject::AddCut(CI newCut)
 	newCI->cn = m_iCurrentCutNum;
 	m_iCurrentCutNum++;
 
-	return false;
+	return true;
 }

@@ -4,35 +4,15 @@
 bool K_Button::Frame() 
 {
 	SetState();
-	m_pTextureSRV = m_pTextureList[m_BS]->m_pTextureSRV; 
+	m_pTextureSRV = m_pCutInfoList[m_BS]->tc->GetSRV();
 	
-	return true;
-}
-
-bool K_Button::Release()
-{
-	K_BaseObject::Release();
-
-	for (auto texture : m_pTextureList) 
-	{
-		texture->Release();
-	}
+	SetPosition(m_OrginPos, PtoN(m_pCutInfoList[m_BS]->pxWH), m_fDepth);
+	SetUV(m_pCutInfoList[m_BS]->uvTL, m_pCutInfoList[m_BS]->uvBR);
+	UpdateVertexBuffer();
 
 	return true;
 }
 
-bool K_Button::AddTexture(std::wstring filename)
-{
-	K_Texture* newTexture = I_Tex.Load(filename);
-
-	if (newTexture != nullptr) 
-	{
-		m_pTextureList.push_back(newTexture);
-		return true;
-	} 
-
-	return false;
-}
 
 bool K_Button::SetState()
 {
@@ -44,9 +24,9 @@ bool K_Button::SetState()
 	float mouseNdcY = -((vMousePos.y / g_rtClient.bottom) * 2.0f - 1.0f);
 
 	if (m_bIsDisable) m_BS = DISABLE; //비활성화 
-
-	else if (m_VertexList[0].p.x <= mouseNdcX && m_VertexList[3].p.x >= mouseNdcX &&
-			 m_VertexList[0].p.y >= mouseNdcY && m_VertexList[3].p.y <= mouseNdcY)
+	//else if (m_VertexList[0].p.x <= mouseNdcX && m_VertexList[3].p.x >= mouseNdcX && m_VertexList[0].p.y >= mouseNdcY && m_VertexList[3].p.y <= mouseNdcY) -> 이건 이미지 크기따라 충돌처리
+	else if (m_CollisionBox[0].x <= mouseNdcX && m_CollisionBox[1].x >= mouseNdcX &&
+			 m_CollisionBox[0].y >= mouseNdcY && m_CollisionBox[1].y <= mouseNdcY)
 	{
 		if (I_Input.GetKey(VK_LBUTTON) == KEY_PUSH || I_Input.GetKey(VK_LBUTTON) == KEY_HOLD) { m_BS = CLICK; }
 		else { m_BS = HOVER; }

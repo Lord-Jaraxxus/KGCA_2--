@@ -49,8 +49,8 @@ ImVec2 K_UIObject::PtoN(ImVec2 pxWH)
 {
 	ImVec2 result;
 
-	result.x = pxWH.x / g_rtClient.right;
-	result.y = pxWH.y / g_rtClient.bottom;
+	result.x = pxWH.x / g_rtClient.right * 2.0f;
+	result.y = pxWH.y / g_rtClient.bottom * 2.0f;
 
 	return result;
 }

@@ -34,14 +34,16 @@ public:
 	bool IsDisable = false;
 	bool IsWireFrame = false;
 	bool IsDepth = false;
-	bool IsAlphaBlend = false;
+	bool IsAlphaBlend = true;
 	bool IsClear = false;
 
 	float ImageXY[2] = { 0, };
 	float ImageWH[2] = { 1, 1 };
+	float ImageUV[2][2] = { { 0, 0 }, {1, 1} };
 	float ImageDA[2] = { 0, 1 };
 	float ButtonXY[2] = { 0, };
-	float ButtonWH[2] = { 1, 1 };
+	float ButtonWH[4][2] = { 0,  };	// [N H C D] [X Y]
+	float ButtonUV[4][2][2] = { {{0,0},{1,1}}, {{0,0},{1,1}}, {{0,0},{1,1}}, {{0,0},{1,1}} };	// [N H C D] [TopLeft BottomRight] [X Y]
 	float ButtonDA[2] = { 0, 1 };
 	float SpriteXY[2] = { 0, };
 	float SpriteWH[2] = { 1, 1 };
@@ -50,12 +52,18 @@ public:
 	std::wstring m_szFileName = L"newfile";
 	std::wstring m_szFileContent = L"";
 	std::vector<std::wstring> m_splitContent;
+
+	std::wstring m_szDefaultShaderName = L"../../data/shader/DefaultObject_Orgin.txt";
 	std::wstring m_szImageFileName = L"D://KGCA_2//data//img//charport.bmp";
+	std::wstring m_szButtonFileName_N = L"D://KGCA_2//data//img//button//Button_N.png";
+	std::wstring m_szButtonFileName_H = L"D://KGCA_2//data//img//button//Button_H.png";
+	std::wstring m_szButtonFileName_C = L"D://KGCA_2//data//img//button//Button_C.png";
+	std::wstring m_szButtonFileName_D = L"D://KGCA_2//data//img//button//Button_D.png";
 
 public:
-	bool CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
-	bool CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
-	bool CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
+	K_UIObject* CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
+	K_Button* CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
+	K_Sprite* CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
 	void Clear();
 
 	std::wstring FileOpen();
@@ -63,5 +71,7 @@ public:
 	void FileLoad();
 	std::wstring FileReadToString(std::wstring readFileName);
 	std::vector<std::wstring> SplitString(std::wstring inputStr, std::wstring delimiter);
+
+	ImVec2 AtoV(float array[2]);
 }; 
 

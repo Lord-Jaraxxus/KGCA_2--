@@ -14,13 +14,11 @@ class K_Button : public K_UIObject
 {
 public:
 	virtual bool Frame() override;
-	virtual bool Release() override;
-	virtual bool AddTexture(std::wstring filename);
 	virtual bool SetState();
 
 public:
 	ButtonState m_BS;
-	std::vector<K_Texture*> m_pTextureList;
+	ImVec2 m_CollisionBox[2];	// 각각 Top Left, Bottom Right인데 NDC 기준
 	bool m_bIsDisable = false;
 };
 

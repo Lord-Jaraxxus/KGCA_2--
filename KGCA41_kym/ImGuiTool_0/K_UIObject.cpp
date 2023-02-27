@@ -76,6 +76,10 @@ bool K_UIObject::Save(std::ofstream& outfile)
 	outfile << std::to_string(m_ID);
 	outfile << "\n";
 
+	outfile << "Name\t";
+	outfile << to_wm(m_szObjName);
+	outfile << "\n";
+
 	outfile << "OrginPos\t";
 	outfile << std::to_string(m_OrginPos[0]);
 	outfile << " ";

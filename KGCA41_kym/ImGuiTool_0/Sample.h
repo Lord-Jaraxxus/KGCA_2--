@@ -19,13 +19,15 @@ public:
 
 public:
 	std::vector<K_UIObject*> m_pUIList;
+	std::map<std::wstring, K_UIObject*> m_pUIMap;
+	K_UIObject* m_SelectedUI = nullptr;
 	// std::vector<K_UIObject*> m_pUIAlphaList; // 필요해질 날이 올라나? 알파값 있는것만 따로 빼는 리스트
 	int m_CurrentID = 1;
 
 	std::vector<K_UIObject*> m_pRectList;
 	std::vector<K_Button*> m_pButtonList;
 	std::vector<K_Sprite*> m_pSpriteList;
-
+	
 	ImVec2 m_CursorPos;
 
 public:
@@ -37,6 +39,10 @@ public:
 	bool IsDepth = false;
 	bool IsAlphaBlend = true;
 	bool IsClear = false;
+
+	char ImageName[256] =  { 0, };
+	char ButtonName[256] = { 0, };
+	char NewName[256] = { 0, };
 
 	float ImageXY[2] = { 0, };
 	float ImageWH[2] = { 1, 1 };
@@ -62,9 +68,9 @@ public:
 	std::wstring m_szButtonFileName_D = L"D://KGCA_2//data//img//button//Button_D.png";
 
 public:
-	K_UIObject* CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
-	K_Button* CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
-	K_Sprite* CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha);
+	K_UIObject* CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name = L"");
+	K_Button* CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name = L"");
+	K_Sprite* CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name = L"");
 	void Clear();
 
 	std::wstring FileOpen();

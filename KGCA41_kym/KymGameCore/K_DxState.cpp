@@ -25,7 +25,8 @@ bool K_DxState::SetState(ID3D11Device* pd3dDevice)
     // CreateSamplerState 매개변수들
     D3D11_SAMPLER_DESC sd; // 1. 샘플러 데스크
     ZeroMemory(&sd, sizeof(sd));
-    sd.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // 최근점 필터링
+    //sd.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // 최근점 필터링
+    sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // 선형? 이쪽이 훨 낫네
     sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
     sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
     sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;

@@ -72,9 +72,9 @@ bool Sample::Frame()
 	if (IsAlphaBlend) { K_DxState::g_pCurrentBS = K_DxState::g_pAlphaBlend; }
 	else { K_DxState::g_pCurrentBS = K_DxState::g_pAlphaBlendDisable; }
 
-	for (auto UI : m_pUIList)
+	for (auto Iter : m_pUIList)
 	{
-		UI->Frame();
+		Iter->Frame();
 	}
 
 	return true;
@@ -82,7 +82,10 @@ bool Sample::Frame()
 
 bool Sample::Render()
 {
-	for (auto UI : m_pUIList) { UI->Render(); }
+	for (auto Iter : m_pUIList)
+	{
+		Iter->Render();
+	}
 
 	//for (auto UIAlpha : m_pUIAlphaList){ UIAlpha->Render(); }
 	//m_pUIAlphaList.clear();
@@ -99,9 +102,9 @@ bool Sample::Render()
 
 bool Sample::Release()
 {
-	for (auto UI : m_pUIList)
+	for (auto Iter : m_pUIList)
 	{
-		UI->Release();
+		Iter->Release();
 	}
 
 	return true; 
@@ -134,7 +137,8 @@ void Sample::ImGuiFrame()
 	if (ImGui::CollapsingHeader(u8"이미지", nullptr)) // 접을 수 있는 헤더
 	{
 		// 선택한 이미지와 이미지 이름
-		ImGui::Image(I_Tex.Find(m_szImageFileName)->GetSRV(), { 100.0f, 100.0f }, { 0,0 }, { 1,1 }, { 1,1,1,1 }, { 0,0,0,1 });
+		K_Texture* texture = I_Tex.Find(m_szImageFileName);
+		ImGui::Image(texture->GetSRV(), { 100.0f, 100.0f }, { 0,0 }, { 1,1 }, { 1,1,1,1 }, { 0,0,0,1 });
 		ImGui::SameLine();
 		_bstr_t fileName(m_szImageFileName.c_str());
 		if (ImGui::Button(fileName))
@@ -143,10 +147,13 @@ void Sample::ImGuiFrame()
 			if (newFileName != L"") // 취소 눌렀으면 거르려고
 			{
 				m_szImageFileName = newFileName;
-				I_Tex.Load(m_szImageFileName);
+				texture = I_Tex.Load(m_szImageFileName);
+				ImageWH[0] = texture->m_Desc.Width;
+				ImageWH[1] = texture->m_Desc.Height;
 			}
 		}
-
+		ImGui::InputTextWithHint(u8"이미지 이름", "NewImage", ImageName, sizeof(ImageName));
+		ImGui::Dummy(ImVec2(0, 5));
 		ImGui::InputFloat2(u8"원점 x,y 좌표 (NDC) - I", ImageXY);
 		ImGui::InputFloat2(u8"이미지 크기 (픽셀) - I", ImageWH);
 		ImGui::InputFloat2("", ImageUV[0]);
@@ -159,18 +166,25 @@ void Sample::ImGuiFrame()
 
 		if (ImGui::Button(u8"이미지 생성 버튼")) // 버튼이 눌렸다면
 		{
-			K_UIObject* newRect;
-			if (IsRandom) // -1 ~ 1 사이의 랜덤 xy좌표 생성
+			std::wstring name(ImageName, ImageName + std::strlen(ImageName));
+			if (m_pUIMap.find(name) == m_pUIMap.end()) // 이름이 중복이 아닐때만 만들도록
 			{
-				float randX = rand();
-				float randY = rand();
-				randX = ((randX / RAND_MAX) * 2) - 1.0f;
-				randY = (((randY / RAND_MAX) * 2) - 1.0f) * -1.0f;
-				newRect = CreateNewRect({ randX, randY }, AtoV(ImageWH), ImageDA[0], ImageDA[1]);
+				K_UIObject* newRect;
+				if (IsRandom) // -1 ~ 1 사이의 랜덤 xy좌표 생성
+				{
+					float randX = rand();
+					float randY = rand();
+					randX = ((randX / RAND_MAX) * 2) - 1.0f;
+					randY = (((randY / RAND_MAX) * 2) - 1.0f) * -1.0f;
+					newRect = CreateNewRect({ randX, randY }, AtoV(ImageWH), ImageDA[0], ImageDA[1], name);
+				}
+				else newRect = CreateNewRect(AtoV(ImageXY), AtoV(ImageWH), ImageDA[0], ImageDA[1], name);
+				newRect->AddCut(AtoV(ImageWH), AtoV(ImageUV[0]), AtoV(ImageUV[1]), m_szImageFileName, m_szDefaultShaderName);
 			}
-			else newRect = CreateNewRect( AtoV(ImageXY), AtoV(ImageWH), ImageDA[0], ImageDA[1]);
-
-			newRect->AddCut(AtoV(ImageWH), AtoV(ImageUV[0]), AtoV(ImageUV[1]), m_szImageFileName, m_szDefaultShaderName);
+			else // 이름이 중복이면 경고 팝업창뜨도록
+			{
+				ImGui::OpenPopup(u8"이름 중복 경고");
+			}
 		}
 	}
 
@@ -275,16 +289,23 @@ void Sample::ImGuiFrame()
 		}
 
 		ImGui::Dummy(ImVec2(0, 30));
+		ImGui::InputTextWithHint(u8"버튼 이름", "Tim Burton", ButtonName, sizeof(ButtonName));
+		ImGui::Dummy(ImVec2(0, 5));
 		ImGui::InputFloat2(u8"원점 x,y좌표 (NDC) - B", ButtonXY);
 		ImGui::InputFloat2(u8"깊이, 알파 - B", ButtonDA);
 
 		if (ImGui::Button(u8"버튼 생성 버튼!"))
 		{
-			K_Button* newButton = CreateNewButton({ ButtonXY[0], ButtonXY[1] }, { ButtonWH[0][0], ButtonWH[0][1] }, ButtonDA[0], ButtonDA[1]);
-			newButton->AddCut( AtoV(ButtonWH[0]), AtoV(ButtonUV[0][0]), AtoV(ButtonUV[0][1]), m_szButtonFileName_N, L"../../data/shader/DefaultObject_Orgin.txt");
-			newButton->AddCut( AtoV(ButtonWH[1]), AtoV(ButtonUV[1][0]), AtoV(ButtonUV[1][1]), m_szButtonFileName_H, L"../../data/shader/DefaultObject_Orgin.txt");
-			newButton->AddCut( AtoV(ButtonWH[2]), AtoV(ButtonUV[2][0]), AtoV(ButtonUV[2][1]), m_szButtonFileName_C, L"../../data/shader/DefaultObject_Orgin.txt");
-			newButton->AddCut( AtoV(ButtonWH[3]), AtoV(ButtonUV[3][0]), AtoV(ButtonUV[3][1]), m_szButtonFileName_D, L"../../data/shader/DefaultObject_Orgin.txt");
+			std::wstring name(ButtonName, ButtonName + strlen(ButtonName));
+			if (m_pUIMap.find(name) == m_pUIMap.end()) // 중복검사
+			{
+				K_Button* newButton = CreateNewButton({ ButtonXY[0], ButtonXY[1] }, { ButtonWH[0][0], ButtonWH[0][1] }, ButtonDA[0], ButtonDA[1], name);
+				newButton->AddCut(AtoV(ButtonWH[0]), AtoV(ButtonUV[0][0]), AtoV(ButtonUV[0][1]), m_szButtonFileName_N, L"../../data/shader/DefaultObject_Orgin.txt");
+				newButton->AddCut(AtoV(ButtonWH[1]), AtoV(ButtonUV[1][0]), AtoV(ButtonUV[1][1]), m_szButtonFileName_H, L"../../data/shader/DefaultObject_Orgin.txt");
+				newButton->AddCut(AtoV(ButtonWH[2]), AtoV(ButtonUV[2][0]), AtoV(ButtonUV[2][1]), m_szButtonFileName_C, L"../../data/shader/DefaultObject_Orgin.txt");
+				newButton->AddCut(AtoV(ButtonWH[3]), AtoV(ButtonUV[3][0]), AtoV(ButtonUV[3][1]), m_szButtonFileName_D, L"../../data/shader/DefaultObject_Orgin.txt");
+			}
+			else { ImGui::OpenPopup(u8"이름 중복 경고"); }
 		}
 		ImGui::Checkbox(u8"버튼 비활성화", &IsDisable);
 	}
@@ -308,109 +329,162 @@ void Sample::ImGuiFrame()
 		ImGui::Checkbox(u8"알파블렌딩 사용", &IsAlphaBlend);
 	}
 
+	// 경고 팝업창
+	if (ImGui::BeginPopupModal(u8"이름 중복 경고", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::Text(u8"중복ㄴㄴ해");
+		if (ImGui::Button(u8"힝..", ImVec2(120, 0)))
+		{
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
+
 	ImGui::PopItemWidth();
 	ImGui::End();
 }
 
 void Sample::HierarchyFrame()
 {
+	bool PopupOpen = false;
+
 	ImGui::Begin(u8"아웃라이너");
 	ImGui::PushItemWidth(150); // 입력창 너비 설정
 
-	//_bstr_t fileName(m_szFileName.c_str());
-	//if (ImGui::CollapsingHeader(fileName, ImGuiTreeNodeFlags_DefaultOpen)) 
-	//{
-	//	for (auto UI : m_pUIList)
-	//	{
-	//		_bstr_t UI_ID(std::to_wstring(UI->m_ID).c_str());
-	//		if (ImGui::TreeNodeEx(UI_ID))
-	//		{
-	//			if (UI->m_Type == IMAGE) 
-	//			{
-	//				ImGui::Image(UI->m_pCutInfoList[0]->tc->GetSRV(), { 100.0f, 100.0f }, { 0,0 }, { 1,1 }, { 1,1,1,1 }, { 0,0,0,1 });
-	//				ImGui::SameLine();
-	//				_bstr_t fileName(UI->m_pCutInfoList[0]->tn.c_str());
-	//				if (ImGui::Button(fileName))
-	//				{
-	//					std::wstring newFileName = FileOpen();
-	//					if (newFileName != L"") // 취소 눌렀으면 거르려고
-	//					{
-	//						UI->m_pCutInfoList[0]->tn = newFileName;
-	//						UI->m_pCutInfoList[0]->tc = I_Tex.Load(newFileName);
-	//					}
-	//				}
-	//				ImGui::InputFloat2("##" + UI_ID + "op", &UI->m_OrginPos.x );
-	//				ImGui::SameLine();
-	//				ImGui::Text(u8"원점 x,y 좌표 (NDC)");
-	//				ImGui::InputFloat2("##" + UI_ID + "wh", &UI->m_pCutInfoList[0]->pxWH.x);
-	//				ImGui::SameLine();
-	//				ImGui::Text(u8"이미지 크기 (픽셀)");
-	//				ImGui::InputFloat2("##" + UI_ID + "uvTL", &UI->m_pCutInfoList[0]->uvTL.x);
-	//				ImGui::SameLine();
-	//				ImGui::InputFloat2("##" + UI_ID + "uvBR", &UI->m_pCutInfoList[0]->uvBR.x);
-	//				ImGui::SameLine();
-	//				ImGui::Text(u8"UV 좌표 (좌상단, 우하단)");
-	//				ImGui::InputFloat2("##" + UI_ID + "d", &UI->m_fDepth);
-	//				ImGui::SameLine();
-	//				ImGui::Text(u8"깊이, 알파");
-	//			}
-
-	//			ImGui::TreePop();
-	//		}
-	//	}
-	//}
-
-	if (ImGui::TreeNodeEx("Node", ImGuiTreeNodeFlags_DefaultOpen))
+	_bstr_t fileName(m_szFileName.c_str());
+	if (ImGui::CollapsingHeader(fileName, ImGuiTreeNodeFlags_DefaultOpen)) 
 	{
-		if (ImGui::IsItemClicked(1))
+		for (auto Iter : m_pUIList)
 		{
-			if (ImGui::IsItemHovered())
+			K_UIObject* UI = Iter;
+			_bstr_t UI_Name(UI->m_szObjName.c_str());
+			if (ImGui::TreeNodeEx(UI_Name, ImGuiTreeNodeFlags_None))
 			{
-				ImGui::OpenPopup("Popup Menu 1");
+				if (ImGui::IsItemClicked(1)) { PopupOpen = true; m_SelectedUI = UI; } // 우클릭 검사
+
+				switch (UI->m_Type) 
+				{
+				case IMAGE:
+				{
+					ImGui::Image(UI->m_pCutInfoList[0]->tc->GetSRV(), { 100.0f, 100.0f }, { 0,0 }, { 1,1 }, { 1,1,1,1 }, { 0,0,0,1 });
+					ImGui::SameLine();
+					_bstr_t fileName(UI->m_pCutInfoList[0]->tn.c_str());
+					if (ImGui::Button(fileName))
+					{
+						std::wstring newFileName = FileOpen();
+						if (newFileName != L"") // 취소 눌렀으면 거르려고
+						{
+							UI->m_pCutInfoList[0]->tn = newFileName;
+							UI->m_pCutInfoList[0]->tc = I_Tex.Load(newFileName);
+						}
+					}
+					ImGui::InputFloat2("##" + UI_Name + "op", &UI->m_OrginPos.x);
+					ImGui::SameLine();
+					ImGui::Text(u8"원점 x,y 좌표 (NDC)");
+					ImGui::InputFloat2("##" + UI_Name + "wh", &UI->m_pCutInfoList[0]->pxWH.x);
+					ImGui::SameLine();
+					ImGui::Text(u8"이미지 크기 (픽셀)");
+					ImGui::InputFloat2("##" + UI_Name + "uvTL", &UI->m_pCutInfoList[0]->uvTL.x);
+					ImGui::SameLine();
+					ImGui::InputFloat2("##" + UI_Name + "uvBR", &UI->m_pCutInfoList[0]->uvBR.x);
+					ImGui::SameLine();
+					ImGui::Text(u8"UV 좌표 (좌상단, 우하단)");
+					ImGui::InputFloat2("##" + UI_Name + "d", &UI->m_fDepth);
+					ImGui::SameLine();
+					ImGui::Text(u8"깊이, 알파");
+				} break;
+				
+				case BUTTON: 
+				{
+					char state[4][64] = {u8"노말", u8"호버", u8"클릭", u8"비활성화"};
+					for (int i = 0; i < 4; i++) 
+					{
+						if (ImGui::TreeNodeEx(state[i], ImGuiTreeNodeFlags_DefaultOpen))
+						{
+							ImGui::Image(UI->m_pCutInfoList[i]->tc->GetSRV(), { 100.0f, 100.0f }, { 0,0 }, { 1,1 }, { 1,1,1,1 }, { 0,0,0,1 });
+							ImGui::SameLine();
+							_bstr_t fileName(UI->m_pCutInfoList[i]->tn.c_str());
+							if (ImGui::Button(fileName))
+							{
+								std::wstring newFileName = FileOpen();
+								if (newFileName != L"") // 취소 눌렀으면 거르려고
+								{
+									UI->m_pCutInfoList[i]->tn = newFileName;
+									UI->m_pCutInfoList[i]->tc = I_Tex.Load(newFileName);
+								}
+								ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 10);
+							}
+							std::string lavel = "##" + std::to_string(i) + to_wm(UI->m_szObjName); // 라벨 이름이 다 달라야해서 설정, 쓸데없이 길어졌네 (앞에 ##달면 안보임)
+							ImGui::InputFloat2((lavel + "wh").c_str(), &UI->m_pCutInfoList[i]->pxWH.x);
+							ImGui::SameLine();
+							ImGui::Text(u8"이미지 크기 (픽셀)");
+							ImGui::NextColumn();
+							ImGui::InputFloat2((lavel + "uvTL").c_str(), &UI->m_pCutInfoList[i]->uvTL.x);
+							ImGui::SameLine();
+							ImGui::InputFloat2((lavel + "uvBR").c_str(), &UI->m_pCutInfoList[i]->uvBR.x);
+							ImGui::SameLine();
+							ImGui::Text(u8"UV 좌표 (좌상단, 우하단)");
+
+							ImGui::TreePop();
+						}
+					}
+					ImGui::InputFloat2("##" + UI_Name + "op", &UI->m_OrginPos.x);
+					ImGui::SameLine();
+					ImGui::Text(u8"원점 x,y 좌표 (NDC)");
+					ImGui::InputFloat2("##" + UI_Name + "d", &UI->m_fDepth);
+					ImGui::SameLine();
+					ImGui::Text(u8"깊이, 알파");
+				}break;
+
+				}		
+				ImGui::TreePop();
 			}
-			else
+			else if (ImGui::IsItemClicked(1)) { PopupOpen = true; m_SelectedUI = UI; }
+		}
+	}
+	
+	bool rename = false;
+	if (PopupOpen) { ImGui::OpenPopup("삭제/이름바꾸기"); }
+	if (ImGui::BeginPopup("삭제/이름바꾸기"))
+	{
+		if (ImGui::MenuItem(u8"삭제"))
+		{
+			//m_pUIMap.erase(m_pUIMap.find(m_SelectedUI->m_szObjName));
+			m_pUIMap.erase(m_SelectedUI->m_szObjName);
+			for (auto UI = m_pUIList.begin(); UI != m_pUIList.end(); ++UI)
 			{
-				ImGui::OpenPopup("Popup Menu 2");
+				if (m_SelectedUI->m_ID == (*UI)->m_ID) 
+				{ m_pUIList.erase(UI); break; }
 			}
 		}
-
-		if (ImGui::BeginPopup("Popup Menu 1"))
+		if (ImGui::MenuItem(u8"이름 바꾸기"))
 		{
-			if (ImGui::MenuItem("Option 1"))
-			{
-				// Handle option 1 selection
-			}
-			if (ImGui::MenuItem("Option 2"))
-			{
-				// Handle option 2 selection
-			}
-			ImGui::EndPopup();
+			WideCharToMultiByte(CP_UTF8, 0, m_SelectedUI->m_szObjName.c_str(), -1, NewName, sizeof(NewName), NULL, NULL);
+			rename = true;
 		}
-
-		if (ImGui::BeginPopup("Popup Menu 2"))
-		{
-			if (ImGui::MenuItem("Option 3"))
-			{
-				// Handle option 3 selection
-			}
-			if (ImGui::MenuItem("Option 4"))
-			{
-				// Handle option 4 selection
-			}
-			ImGui::EndPopup();
-		}
-
-		// Add child nodes here
-
-		ImGui::TreePop();
+		ImGui::EndPopup();
 	}
 
+	if (rename) 
+	{ 
+		ImGui::OpenPopup(u8"이름 바꾸기");
+	}
+	if (ImGui::BeginPopupModal(u8"이름 바꾸기", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::InputTextWithHint(u8"새 이름", u8"이름없는 자", NewName, sizeof(ButtonName));
+		if (ImGui::Button(u8"완료!", ImVec2(120, 0)))
+		{
+			m_SelectedUI->m_szObjName = std::wstring(NewName, NewName + strlen(NewName));
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
 
 	ImGui::PopItemWidth();
 	ImGui::End();
 }
 
-K_UIObject* Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha)
+K_UIObject* Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name)
 {
 	bool success;
 
@@ -419,8 +493,11 @@ K_UIObject* Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float dep
 
 	if (success) 
 	{
-		m_pRectList.push_back(newRect);
+		if (name == L"") newRect->m_szObjName = std::to_wstring(m_CurrentID);
+		else newRect->m_szObjName = name;
+		m_pUIMap.insert(std::make_pair(newRect->m_szObjName, newRect));
 		m_pUIList.push_back(newRect);
+		m_pRectList.push_back(newRect);
 
 		newRect->SetPosition(orginPos, K_UIObject::PtoN(widthHeight), depth);
 		newRect->SetAlpha(alpha);
@@ -436,7 +513,7 @@ K_UIObject* Sample::CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float dep
 	return nullptr;
 }
 
-K_Button* Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha)
+K_Button* Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name)
 {
 	bool success;
 
@@ -445,8 +522,11 @@ K_Button* Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float dep
 	
 	if (success)
 	{
-		m_pButtonList.push_back(newButton);
+		if (name == L"") newButton->m_szObjName = std::to_wstring(m_CurrentID);
+		else newButton->m_szObjName = name;
+		m_pUIMap.insert(std::make_pair(newButton->m_szObjName, newButton));
 		m_pUIList.push_back(newButton);
+		m_pButtonList.push_back(newButton);
 
 		newButton->SetPosition(orginPos, K_UIObject::PtoN(widthHeight), depth);
 		newButton->SetAlpha(alpha);
@@ -465,7 +545,7 @@ K_Button* Sample::CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float dep
 	return nullptr;
 }
 
-K_Sprite* Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha)
+K_Sprite* Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name)
 {
 	bool success;
 
@@ -504,6 +584,8 @@ K_Sprite* Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float dep
 		newSprite->m_Type = IMAGE;
 		newSprite->m_ID = m_CurrentID;
 		m_CurrentID++;
+		if (name == L"") newSprite->m_szObjName = std::to_wstring(newSprite->m_ID);
+		else newSprite->m_szObjName = name;
 
 		return newSprite;
 	}
@@ -514,7 +596,8 @@ K_Sprite* Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float dep
 
 void Sample::Clear()
 {
-	for (auto UI : m_pUIList) { UI->Release(); }
+	for (auto Iter : m_pUIMap) { Iter.second->Release(); }
+	m_pUIMap.clear();
 	m_pUIList.clear();
 	m_pRectList.clear();
 	m_pButtonList.clear();
@@ -610,7 +693,8 @@ void Sample::FileSave(std::wstring saveFileName)
 	std::ofstream outfile(sFilePath);
 	if (outfile.is_open())
 	{
-		for (auto UI : m_pUIList) { UI->Save(outfile); }
+		// 실질적으로 여기만 건드리면 됨
+		for (auto Iter : m_pUIMap) { Iter.second->Save(outfile); }
 		outfile.close();
 	}
 
@@ -625,28 +709,28 @@ void Sample::FileSave(std::wstring saveFileName)
 
 void Sample::FileLoad()
 {
-	Clear();
-
 	std::wstring newFileName = FileOpen();
 	if (newFileName == L"") return;
+	Clear();
 
 	m_szFileName = I_Tex.GetSplitName(newFileName);
 	m_szFileContent = FileReadToString(newFileName);
 	m_splitContent = SplitString(m_szFileContent, L"="); // 일단 오브젝트 단위로 쪼갬
 	
-	UIType	Type;
-	int		ID;
-	ImVec2	OrginPos;
-	float	Depth;
-	float	Alpha;
+	UIType			Type;
+	int				ID;
+	std::wstring	Name;
+	ImVec2			OrginPos;
+	float			Depth;
+	float			Alpha;
 
 	std::vector<CI> cutInfoList;
-	int cutNum;
-	ImVec2 WidthHeight;
-	ImVec2 uvTL;
-	ImVec2 uvBR;
-	std::wstring TextureName;
-	std::wstring ShaderName;
+	int				cutNum;
+	ImVec2			WidthHeight;
+	ImVec2			uvTL;
+	ImVec2			uvBR;
+	std::wstring	TextureName;
+	std::wstring	ShaderName;
 
 	for (auto obj : m_splitContent) 
 	{
@@ -660,6 +744,7 @@ void Sample::FileLoad()
 			if (LineContent.size() == 0) { continue; }
 			else if (LineContent[0] == L"Type") { Type = (UIType)std::stoi(LineContent[1]); }
 			else if (LineContent[0] == L"ID") { ID = std::stoi(LineContent[1]); }
+			else if (LineContent[0] == L"Name") { Name = LineContent[1]; }
 			else if (LineContent[0] == L"OrginPos") 
 			{ 
 				std::vector<std::wstring> OrginPosContent = SplitString(LineContent[1], L" ");
@@ -701,7 +786,7 @@ void Sample::FileLoad()
 		// 여기서 UI 오브젝트 생성
 		if (Type == IMAGE) // 그냥 이미지
 		{
-			K_UIObject* newRect = CreateNewRect(OrginPos, cutInfoList[0].pxWH, Depth, Alpha);			
+			K_UIObject* newRect = CreateNewRect(OrginPos, cutInfoList[0].pxWH, Depth, Alpha, Name);
 			if (newRect != nullptr)
 			{
 				for (auto CI : cutInfoList) { newRect->AddCut(CI); }
@@ -710,7 +795,7 @@ void Sample::FileLoad()
 		}
 		else if (Type == BUTTON) // 버튼
 		{
-			K_Button* newButton = CreateNewButton(OrginPos, cutInfoList[0].pxWH, Depth, Alpha);
+			K_Button* newButton = CreateNewButton(OrginPos, cutInfoList[0].pxWH, Depth, Alpha, Name);
 			if (newButton != nullptr)
 			{
 				for (auto CI : cutInfoList) { newButton->AddCut(CI); }
@@ -780,9 +865,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ int       nCmdShow)
 {
 	Sample demo;
-	demo.SetWindow(hInstance, L"UI Tool", 800, 900);
+	demo.SetWindow(hInstance, L"UI Tool", 1600, 900);
 	demo.Run();
 	return 1;
 }
 
-//GAME_RUN(CreateObject, 800, 900)
+//GAME_RUN(CreateObject, 1600, 900)

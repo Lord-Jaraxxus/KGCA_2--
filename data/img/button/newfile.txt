@@ -1,6 +1,6 @@
 Type	0
 ID	1
-Name	Background
+Name	BG
 OrginPos	0.000000 0.000000
 Depth	0.000000
 Alpha	1.000000

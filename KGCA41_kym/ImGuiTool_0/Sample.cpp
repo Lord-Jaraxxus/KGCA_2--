@@ -347,6 +347,8 @@ void Sample::ImGuiFrame()
 void Sample::HierarchyFrame()
 {
 	bool PopupOpen = false;
+	bool rename = false;
+	bool duplication = false;
 
 	ImGui::Begin(u8"아웃라이너");
 	ImGui::PushItemWidth(150); // 입력창 너비 설정
@@ -443,7 +445,6 @@ void Sample::HierarchyFrame()
 		}
 	}
 	
-	bool rename = false;
 	if (PopupOpen) { ImGui::OpenPopup("삭제/이름바꾸기"); }
 	if (ImGui::BeginPopup("삭제/이름바꾸기"))
 	{
@@ -465,16 +466,34 @@ void Sample::HierarchyFrame()
 		ImGui::EndPopup();
 	}
 
-	if (rename) 
-	{ 
-		ImGui::OpenPopup(u8"이름 바꾸기");
-	}
+	if (rename) { ImGui::OpenPopup(u8"이름 바꾸기");  }
 	if (ImGui::BeginPopupModal(u8"이름 바꾸기", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::InputTextWithHint(u8"새 이름", u8"이름없는 자", NewName, sizeof(ButtonName));
 		if (ImGui::Button(u8"완료!", ImVec2(120, 0)))
 		{
-			m_SelectedUI->m_szObjName = std::wstring(NewName, NewName + strlen(NewName));
+			std::wstring szNewName(NewName, NewName + strlen(NewName));
+			if (m_pUIMap.find(szNewName) != m_pUIMap.end() && szNewName != m_SelectedUI->m_szObjName) // 중복된 이름이 있고, 그게 원래 이름이 아니라면
+			{
+				ImGui::CloseCurrentPopup();
+				duplication = true;
+			}
+			else 
+			{
+				m_SelectedUI->m_szObjName;
+				ImGui::CloseCurrentPopup();
+			}
+		}
+		ImGui::EndPopup();
+	}
+
+	// 경고 팝업창
+	if (duplication) { ImGui::OpenPopup(u8"이름 중복 경고"); }
+	if (ImGui::BeginPopupModal(u8"이름 중복 경고", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::Text(u8"중복ㄴㄴ해");
+		if (ImGui::Button(u8"힝..", ImVec2(120, 0)))
+		{
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();

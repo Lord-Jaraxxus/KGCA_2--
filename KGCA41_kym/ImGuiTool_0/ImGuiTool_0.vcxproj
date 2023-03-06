@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="K_Button.cpp" />
+    <ClCompile Include="K_List.cpp" />
     <ClCompile Include="K_Sprite.cpp" />
     <ClCompile Include="K_UIObject.cpp" />
     <ClCompile Include="Sample.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="K_Button.h" />
+    <ClInclude Include="K_List.h" />
     <ClInclude Include="K_Sprite.h" />
     <ClInclude Include="K_UIObject.h" />
     <ClInclude Include="Sample.h" />

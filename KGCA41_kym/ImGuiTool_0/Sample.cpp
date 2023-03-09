@@ -480,7 +480,7 @@ void Sample::HierarchyFrame()
 			}
 			else 
 			{
-				m_SelectedUI->m_szObjName;
+				m_SelectedUI->m_szObjName = szNewName;
 				ImGui::CloseCurrentPopup();
 			}
 		}
@@ -808,7 +808,8 @@ void Sample::FileLoad()
 			K_UIObject* newRect = CreateNewRect(OrginPos, cutInfoList[0].pxWH, Depth, Alpha, Name);
 			if (newRect != nullptr)
 			{
-				for (auto CI : cutInfoList) { newRect->AddCut(CI); }
+				for (auto CI : cutInfoList) { 
+					newRect->AddCut(CI); }
 				newRect->m_pTextureSRV = newRect->m_pCutInfoList[0]->tc->GetSRV();
 			}
 		}

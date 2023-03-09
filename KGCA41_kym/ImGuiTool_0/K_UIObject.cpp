@@ -12,6 +12,14 @@ bool K_UIObject::Frame()
 	return true;
 }
 
+bool K_UIObject::Release()
+{
+	for (auto CI : m_pCutInfoList) { delete CI; }
+	K_BaseObject::Release();
+
+	return true;
+}
+
 bool K_UIObject::SetUV(ImVec2 uvTL, ImVec2 uvBR)
 {
 	m_VertexList[0].t.x = uvTL.x;
@@ -56,6 +64,7 @@ bool K_UIObject::SetAlpha(float alpha)
 	return true;
 }
 
+// Pixel to NDC
 ImVec2 K_UIObject::PtoN(ImVec2 pxWH)
 {
 	ImVec2 result;

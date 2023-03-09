@@ -33,30 +33,6 @@ namespace K_DX
 
     bool K_BaseObject::Frame()
     {
-        //m_VertexList[0] = { {-1.0f, 1.0f, 0.0f}, };
-        //m_VertexList[1] = { {+1.0f, 1.0f, 0.0f}, };
-        //m_VertexList[2] = { {-1.0f, -1.0f, 0.0f}, };
-        //m_VertexList[3] = { {-1.0f, -1.0f, 0.0f}, };
-        //m_VertexList[4] = { {+1.0f, 1.0f, 0.0f}, };
-        //m_VertexList[5] = { {+1.0f, -1.0f, 0.0f}, };
-        // 몬가.. 몬가.. 모몬가임... 텍스쳐 좌표에 대한 공부가 좀 필요할 듯 하다
-
-        //m_VertexList[0].t = { 1.0f, 0.0f };
-        //m_VertexList[1].t = { 0.0f, 0.0f };
-        //m_VertexList[4].t = { 0.0f, 0.0f }; 
-
-        //m_VertexList[5].t = { 0.0f, 1.0f };
-        //m_VertexList[2].t = { 1.0f, 1.0f };
-        //m_VertexList[3].t = { 1.0f, 1.0f };
-        // 텍스처 좌표를 뒤집어서 그림을 좌우반전 시킨거, 근데 대체 뭔지 아직 잘 모르겠따;
-
-        //m_VertexList[0] = { {frame_test, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f, 0.0f} };
-        //if (frame_test <= -1.0f) { test_flag = false; }
-        //else if (frame_test >= 0.0f) { test_flag = true; }
-
-        //if (test_flag == true) frame_test -= 0.001f;
-        //else frame_test += 0.001f;
-
         // gpu update 함수
         //m_pImmediateContext->UpdateSubresource(m_pVertexBuffer, 0, nullptr, &m_VertexList.at(0) ,0 ,0);
         return true;

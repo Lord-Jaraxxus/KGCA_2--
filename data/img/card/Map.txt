@@ -1,0 +1,21 @@
+Type	0
+ID	1
+Name	1
+OrginPos	0.000000 0.000000
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 1920.000000 1080.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\map\mapTopExample.png | ../../data/shader/DefaultObject_Orgin.txt
+=
+Type	1
+ID	2
+Name	Back
+OrginPos	0.880000 0.900000
+Depth	0.000000
+Alpha	1.000000
+CutNum	4
+CutInfo	0 | 128.000000 128.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\card\BackButton.png | ../../data/shader/DefaultObject_Orgin.txt
+CutInfo	1 | 150.000000 150.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\card\BackButton.png | ../../data/shader/DefaultObject_Orgin.txt
+CutInfo	2 | 120.000000 120.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\card\BackButton.png | ../../data/shader/DefaultObject_Orgin.txt
+CutInfo	3 | 128.000000 128.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\card\BackButtonWhite.png | ../../data/shader/DefaultObject_Orgin.txt
+=

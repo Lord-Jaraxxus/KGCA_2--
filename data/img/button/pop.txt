@@ -1,0 +1,9 @@
+Type	0
+ID	1
+Name	1
+OrginPos	-0.800000 0.500000
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 221.000000 292.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\enemy\GremlinLeader.png | ../../data/shader/DefaultObject_Orgin.txt
+=

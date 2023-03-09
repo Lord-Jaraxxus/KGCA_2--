@@ -28,6 +28,7 @@ class K_UIObject : public K_BaseObject
 {
 public:
 	virtual bool	Frame() override;
+	virtual bool	Release() override;
 
 public:
 	virtual bool	SetUV(ImVec2 uvTL, ImVec2 uvBR);

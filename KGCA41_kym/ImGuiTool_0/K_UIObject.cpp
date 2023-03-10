@@ -3,6 +3,8 @@
 
 bool K_UIObject::Frame()
 {
+	Drag();
+
 	if (m_pCutInfoList.size() == 0) return false;
 	m_pTextureSRV = m_pCutInfoList[0]->tc->GetSRV();
 
@@ -64,13 +66,23 @@ bool K_UIObject::SetAlpha(float alpha)
 	return true;
 }
 
-// Pixel to NDC
+// Pixel to NDC, Width Height
 ImVec2 K_UIObject::PtoN(ImVec2 pxWH)
 {
 	ImVec2 result;
 
 	result.x = pxWH.x / g_rtClient.right * 2.0f;
 	result.y = pxWH.y / g_rtClient.bottom * 2.0f;
+
+	return result;
+}
+
+ImVec2 K_UIObject::PtoN_Pos(ImVec2 pxWH)
+{
+	ImVec2 result;
+
+	result.x = (pxWH.x / g_rtClient.right) * 2.0f - 1.0f;
+	result.y = -((pxWH.y / g_rtClient.bottom) * 2.0f - 1.0f);
 
 	return result;
 }
@@ -184,4 +196,34 @@ bool K_UIObject::AddCut(CI newCut)
 	m_iCurrentCutNum++;
 
 	return true;
+}
+
+void K_UIObject::Drag()
+{
+	ImVec2 vMousePos;
+	vMousePos.x = I_Input.m_ptPos.x;
+	vMousePos.y = I_Input.m_ptPos.y;
+
+	float mouseNdcX = (vMousePos.x / g_rtClient.right) * 2.0f - 1.0f; // 마우스 x좌표를 NDC좌표계로 변환
+	float mouseNdcY = -((vMousePos.y / g_rtClient.bottom) * 2.0f - 1.0f);
+
+	if (m_VertexList[0].p.x <= mouseNdcX && m_VertexList[3].p.x >= mouseNdcX &&
+		m_VertexList[0].p.y >= mouseNdcY && m_VertexList[3].p.y <= mouseNdcY) 
+	{
+		if (I_Input.GetKey(VK_LBUTTON) == KEY_PUSH || I_Input.GetKey(VK_LBUTTON) == KEY_HOLD) { m_bIsClicked = true; }
+		else { m_bIsClicked = false; }
+	}
+	
+	if (m_bDraggable && m_bIsClicked) 
+	{
+		ImVec2 Offset; 
+		Offset.x = I_Input.m_ptOffset.x;
+		Offset.y = I_Input.m_ptOffset.y;
+
+		float OffsetNdcX = (Offset.x / g_rtClient.right) * 2.0f;
+		float OffsetNdcY = -((Offset.y / g_rtClient.bottom) * 2.0f);
+
+		m_OrginPos.x += OffsetNdcX;
+		m_OrginPos.y += OffsetNdcY;
+	}
 }

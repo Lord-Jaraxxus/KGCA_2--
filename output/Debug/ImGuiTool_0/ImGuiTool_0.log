@@ -2,33 +2,11 @@
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(498,5): warning MSB8004: Intermediate 디렉터리가 슬래시로 끝나지 않습니다. Intermediate 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
-  Sample.cpp
+  K_UIObject.cpp
 D:\KGCA_2\include\k_Vector.h(38,39): warning C4227: 오래된 구문을 사용했습니다. 참조의 한정자가 무시됩니다.
 D:\KGCA_2\include\k_Vector.h(40,41): warning C4227: 오래된 구문을 사용했습니다. 참조의 한정자가 무시됩니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(27,52): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(28,52): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(29,59): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(30,59): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(31,59): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(32,59): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(33,59): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(34,59): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(35,59): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(36,59): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(52,34): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(53,34): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(151,33): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(152,33): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(175,18): warning C4244: '초기화 중': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(176,18): warning C4244: '초기화 중': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(208,38): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(209,38): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(232,38): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(233,38): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(256,38): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(257,38): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(280,38): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(281,38): warning C4244: '=': 'UINT'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(747,9): warning C4101: 'cutNum' :참조되지 않은 지역 변수입니다.
-D:\KGCA_2\KGCA41_kym\ImGuiTool_0\Sample.cpp(878): warning C4172: 지역 변수 또는 임시: array의 주소를 반환하고 있습니다.
+D:\KGCA_2\KGCA41_kym\ImGuiTool_0\K_UIObject.cpp(204,31): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\KGCA_2\KGCA41_kym\ImGuiTool_0\K_UIObject.cpp(205,31): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\KGCA_2\KGCA41_kym\ImGuiTool_0\K_UIObject.cpp(220,32): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\KGCA_2\KGCA41_kym\ImGuiTool_0\K_UIObject.cpp(221,32): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   ImGuiTool_0.vcxproj -> D:\KGCA_2\output\Debug\ImGuiTool_0.exe

@@ -1,5 +1,6 @@
 #pragma once
 #include "K_BaseObject.h"
+#include "K_Input.h"
 #include <fstream>
 
 enum UIType 
@@ -35,12 +36,16 @@ public:
 	virtual bool	SetPosition(ImVec2 orginPos, ImVec2 widthHeight, float depth);
 	virtual bool	SetAlpha(float alpha);
 	static ImVec2	PtoN(ImVec2 pxWH); // Pixel to NDC, pixle Width Height
+	static ImVec2	PtoN_Pos(ImVec2 pxWH);
 
 	virtual bool	Save(std::ofstream& outfile);
 	virtual bool	Load();
 
-	virtual bool AddCut(ImVec2 pxWH, ImVec2 uvTL, ImVec2 uvBR, std::wstring tn, std::wstring sn);
-	virtual bool AddCut(CI newCut);
+	virtual bool	AddCut(ImVec2 pxWH, ImVec2 uvTL, ImVec2 uvBR, std::wstring tn, std::wstring sn);
+	virtual bool	AddCut(CI newCut);
+
+	virtual void	Drag();
+
 public:
 	UIType			m_Type;
 	int				m_ID;
@@ -58,5 +63,7 @@ public:
 	std::vector<CI*> m_pCutInfoList;
 	int m_iCurrentCutNum = 0;
 
+	bool m_bDraggable = true; // 나중에 툴에 드래그가능 상호작용 가능케끔하고 기본 false로 해야할듯..
+	bool m_bIsClicked = false;
 };
 

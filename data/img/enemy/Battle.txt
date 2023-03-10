@@ -1,0 +1,39 @@
+Type	0
+ID	1
+Name	BG
+OrginPos	0.000000 0.000000
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 2048.000000 2048.000000 | 0.100000 -0.500000 1.000000 1.000000 | D:\KGCA_2\data\img\battle\background.jpg | ../../data/shader/DefaultObject_Orgin.txt
+=
+Type	0
+ID	2
+Name	Player
+OrginPos	-0.700000 -0.300000
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 300.000000 325.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\battle\Player_Shield.png | ../../data/shader/DefaultObject_Orgin.txt
+=
+Type	0
+ID	4
+Name	Mon1
+OrginPos	0.600000 -0.300000
+Depth	0.000000
+Alpha	1.000000
+CutNum	1
+CutInfo	0 | 221.000000 292.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\enemy\GremlinLeader.png | ../../data/shader/DefaultObject_Orgin.txt
+=
+Type	1
+ID	5
+Name	TurnEnd
+OrginPos	0.000000 0.000000
+Depth	0.000000
+Alpha	1.000000
+CutNum	4
+CutInfo	0 | 256.000000 256.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//button//Button_N.png | ../../data/shader/DefaultObject_Orgin.txt
+CutInfo	1 | 270.000000 270.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//button//Button_H.png | ../../data/shader/DefaultObject_Orgin.txt
+CutInfo	2 | 250.000000 250.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//button//Button_C.png | ../../data/shader/DefaultObject_Orgin.txt
+CutInfo	3 | 256.000000 256.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//button//Button_D.png | ../../data/shader/DefaultObject_Orgin.txt
+=

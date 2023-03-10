@@ -1,8 +1,13 @@
 #include "K_Button.h"
-#include "K_Input.h"
+
 
 bool K_Button::Frame() 
 {
+	m_CollisionBox[0] = { m_VertexList[0].p.x, m_VertexList[0].p.y };
+	m_CollisionBox[1] = { m_VertexList[3].p.x, m_VertexList[3].p.y };
+
+	Drag();
+
 	SetState();
 
 	if (m_pCutInfoList.size() == 0) return false;

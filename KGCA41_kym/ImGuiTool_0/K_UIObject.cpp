@@ -77,16 +77,6 @@ ImVec2 K_UIObject::PtoN(ImVec2 pxWH)
 	return result;
 }
 
-ImVec2 K_UIObject::PtoN_Pos(ImVec2 pxWH)
-{
-	ImVec2 result;
-
-	result.x = (pxWH.x / g_rtClient.right) * 2.0f - 1.0f;
-	result.y = -((pxWH.y / g_rtClient.bottom) * 2.0f - 1.0f);
-
-	return result;
-}
-
 bool K_UIObject::Save(std::ofstream& outfile)
 {
 	outfile << "Type\t";
@@ -210,8 +200,8 @@ void K_UIObject::Drag()
 	if (m_VertexList[0].p.x <= mouseNdcX && m_VertexList[3].p.x >= mouseNdcX &&
 		m_VertexList[0].p.y >= mouseNdcY && m_VertexList[3].p.y <= mouseNdcY) 
 	{
-		if (I_Input.GetKey(VK_LBUTTON) == KEY_PUSH || I_Input.GetKey(VK_LBUTTON) == KEY_HOLD) { m_bIsClicked = true; }
-		else { m_bIsClicked = false; }
+		if (I_Input.GetKey(VK_LBUTTON) == KEY_PUSH ) { m_bIsClicked = true; }
+		else if (I_Input.GetKey(VK_LBUTTON) == KEY_UP) { m_bIsClicked = false; }
 	}
 	
 	if (m_bDraggable && m_bIsClicked) 

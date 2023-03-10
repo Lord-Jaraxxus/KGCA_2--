@@ -33,7 +33,6 @@ public:
 public:
 	bool IsToolActive = true;
 	bool IsRandom = false;
-	bool IsSelect = false;
 	bool IsDisable = false;
 	bool IsWireFrame = false;
 	bool IsDepth = false;

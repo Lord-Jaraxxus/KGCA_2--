@@ -46,18 +46,6 @@ bool Sample::Frame()
 
 	HierarchyFrame();
 
-
-	if (I_Input.GetKey(VK_LBUTTON) == KEY_PUSH && IsSelect)
-	{
-		m_CursorPos.x = I_Input.m_ptPos.x;
-		m_CursorPos.y = I_Input.m_ptPos.y;
-		m_CursorPos.x = ((m_CursorPos.x / g_rtClient.right) * 2.0f) - 1.0f; // 마우스 좌표를 -1 ~ 1 사이로 변환
-		m_CursorPos.y = (((m_CursorPos.y / g_rtClient.bottom) * 2.0f) - 1.0f) * -1.0f; // 마우스 좌표를 -1 ~ 1 사이로 변환
-
-		K_UIObject* newRect;
-		newRect = CreateNewRect({ (float)m_CursorPos.x, (float)m_CursorPos.y }, AtoV(ImageWH), ImageDA[0], ImageDA[1]);
-		newRect->AddCut(AtoV(ImageWH), AtoV(ImageUV[0]), AtoV(ImageUV[1]), m_szImageFileName, m_szDefaultShaderName);
-	}
 	
 	for (auto button : m_pButtonList)
 	{
@@ -72,10 +60,14 @@ bool Sample::Frame()
 	if (IsAlphaBlend) { K_DxState::g_pCurrentBS = K_DxState::g_pAlphaBlend; }
 	else { K_DxState::g_pCurrentBS = K_DxState::g_pAlphaBlendDisable; }
 
+	K_UIObject* LastUI = nullptr;
 	for (auto Iter : m_pUIList)
 	{
 		Iter->Frame();
+		Iter->m_bDraggable = false;
+		if (Iter->m_bIsClicked) { LastUI = Iter; }
 	}
+	if (LastUI != nullptr) { LastUI->m_bDraggable = true; }
 
 	return true;
 }
@@ -162,7 +154,6 @@ void Sample::ImGuiFrame()
 		ImGui::InputFloat2(u8"깊이, 알파 - I", ImageDA);
 
 		ImGui::Checkbox(u8"랜덤 위치에 이미지 생성", &IsRandom);
-		ImGui::Checkbox(u8"클릭한 위치에 이미지 생성", &IsSelect);
 
 		if (ImGui::Button(u8"이미지 생성 버튼")) // 버튼이 눌렸다면
 		{

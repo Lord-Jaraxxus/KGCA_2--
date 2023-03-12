@@ -60,11 +60,11 @@ public:
 	std::vector<std::wstring> m_splitContent;
 
 	std::wstring m_szDefaultShaderName = L"../../data/shader/DefaultObject_Orgin.txt";
-	std::wstring m_szImageFileName = L"D://KGCA_2//data//img//charport.bmp";
-	std::wstring m_szButtonFileName_N = L"D://KGCA_2//data//img//button//Button_N.png";
-	std::wstring m_szButtonFileName_H = L"D://KGCA_2//data//img//button//Button_H.png";
-	std::wstring m_szButtonFileName_C = L"D://KGCA_2//data//img//button//Button_C.png";
-	std::wstring m_szButtonFileName_D = L"D://KGCA_2//data//img//button//Button_D.png";
+	std::wstring m_szImageFileName = L"../../data//img//charport.bmp";
+	std::wstring m_szButtonFileName_N = L"../../data//img//button//Button_N.png";
+	std::wstring m_szButtonFileName_H = L"../../data//img//button//Button_H.png";
+	std::wstring m_szButtonFileName_C = L"../../data//img//button//Button_C.png";
+	std::wstring m_szButtonFileName_D = L"../../data//img//button//Button_D.png";
 
 public:
 	K_UIObject* CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name = L"");

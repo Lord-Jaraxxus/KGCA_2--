@@ -65,9 +65,13 @@ bool Sample::Frame()
 	{
 		Iter->Frame();
 		Iter->m_bDraggable = false;
-		if (Iter->m_bIsClicked) { LastUI = Iter; }
+		if (Iter->m_bIsClicked) { Iter->m_bIsClicked = false;  LastUI = Iter; }
 	}
-	if (LastUI != nullptr) { LastUI->m_bDraggable = true; }
+	if (LastUI != nullptr) 
+	{
+		LastUI->m_bDraggable = true; 
+		LastUI->m_bIsClicked = true;
+	}
 
 	return true;
 }

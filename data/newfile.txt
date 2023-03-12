@@ -1,40 +1,9 @@
 Type	0
 ID	1
-OrginPos	0.000000 0.000000
+Name	1
+OrginPos	0.440000 0.444444
 Depth	0.000000
 Alpha	1.000000
 CutNum	1
-CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
-=
-Type	0
-ID	2
-OrginPos	-0.997497 -0.127171
-Depth	0.000000
-Alpha	1.000000
-CutNum	1
-CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
-=
-Type	0
-ID	3
-OrginPos	-0.613392 -0.617481
-Depth	0.000000
-Alpha	1.000000
-CutNum	1
-CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D://KGCA_2//data//img//charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
-=
-Type	0
-ID	4
-OrginPos	0.170019 0.040254
-Depth	0.000000
-Alpha	1.000000
-CutNum	1
-CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\2.png | ../../data/shader/DefaultObject_Orgin.txt
-=
-Type	0
-ID	5
-OrginPos	-0.299417 -0.791925
-Depth	0.000000
-Alpha	1.000000
-CutNum	1
-CutInfo	0 | 1.000000 1.000000 | 0.000000 0.000000 1.000000 1.000000 | D:\KGCA_2\data\img\2.png | ../../data/shader/DefaultObject_Orgin.txt
+CutInfo	0 | 64.000000 64.000000 | 0.000000 0.000000 1.000000 1.000000 | charport.bmp | ../../data/shader/DefaultObject_Orgin.txt
 =

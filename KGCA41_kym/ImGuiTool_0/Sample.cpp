@@ -708,7 +708,7 @@ void Sample::FileSave(std::wstring saveFileName)
 	if (outfile.is_open())
 	{
 		// 실질적으로 여기만 건드리면 됨
-		for (auto Iter : m_pUIMap) { Iter.second->Save(outfile); }
+		for (auto Iter : m_pUIList) { Iter->Save(outfile); }
 		outfile.close();
 	}
 

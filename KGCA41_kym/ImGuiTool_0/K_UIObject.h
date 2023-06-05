@@ -50,10 +50,15 @@ public:
 	int				m_ID;
 	std::wstring	m_szObjName;
 
-	ImVec2 m_OrginPos;
-	ImVec2 m_WidthHeight; // 일단 NDC
-	float  m_fDepth = 0.0f;
-	float  m_fAlpha = 1.0f;
+	bool	m_bOrginStandard = true;	// 원점 기준, true면 중앙 false면 좌상단
+	ImVec2	m_OrginPos;		
+	ImVec2	m_WidthHeight; // 일단 NDC
+	float	m_fDepth = 0.0f;
+	float	m_fAlpha = 1.0f;
+
+	bool	m_bIsInList = false;	// 리스트 안에 들어있는 오브젝트인지?
+	ImVec2	m_ListPos;				// 리스트 원점 기준으로 어느 위치에 있는지
+	
 
 	// 얘들은 베이스 오브젝트에 이미 있음
 	//std::wstring	m_szTextureName;
@@ -62,7 +67,7 @@ public:
 	std::vector<CI*> m_pCutInfoList;
 	int m_iCurrentCutNum = 0;
 
-	bool m_bDraggable = false; // 나중에 툴에 드래그가능 상호작용 가능케끔하고 기본 false로 해야할듯..
+	bool m_bDraggable = false; 
 	bool m_bIsClicked = false;
 };
 

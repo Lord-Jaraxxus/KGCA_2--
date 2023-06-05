@@ -41,10 +41,23 @@ bool K_UIObject::SetUV(ImVec2 uvTL, ImVec2 uvBR)
 
 bool K_UIObject::SetPosition(ImVec2 orginPos, ImVec2 widthHeight, float depth) // NDC 좌표계 기준 원점(중앙)과 너비, 높이를 받아와서 세팅
 {
-	m_VertexList[0].p = { orginPos.x - widthHeight.x / 2, orginPos.y + widthHeight.y / 2, depth };
-	m_VertexList[1].p = { orginPos.x + widthHeight.x / 2, orginPos.y + widthHeight.y / 2, depth };
-	m_VertexList[2].p = { orginPos.x - widthHeight.x / 2, orginPos.y - widthHeight.y / 2, depth };
-	m_VertexList[3].p = { orginPos.x + widthHeight.x / 2, orginPos.y - widthHeight.y / 2, depth };
+	ImVec2 OrginPos = orginPos;
+	if (m_bIsInList) { OrginPos.x += m_ListPos.x; OrginPos.y += m_ListPos.y; }	// 리스트 안의 오브젝트라면
+
+	if (m_bOrginStandard) // 원점이 중앙일 경우
+	{
+		m_VertexList[0].p = { OrginPos.x - widthHeight.x / 2, OrginPos.y + widthHeight.y / 2, depth };
+		m_VertexList[1].p = { OrginPos.x + widthHeight.x / 2, OrginPos.y + widthHeight.y / 2, depth };
+		m_VertexList[2].p = { OrginPos.x - widthHeight.x / 2, OrginPos.y - widthHeight.y / 2, depth };
+		m_VertexList[3].p = { OrginPos.x + widthHeight.x / 2, OrginPos.y - widthHeight.y / 2, depth };
+	}
+	else // 원점이 좌상단일 경우
+	{
+		m_VertexList[0].p = { OrginPos.x				, OrginPos.y				, depth };
+		m_VertexList[1].p = { OrginPos.x + widthHeight.x, OrginPos.y				, depth };
+		m_VertexList[2].p = { OrginPos.x				, OrginPos.y - widthHeight.y, depth };
+		m_VertexList[3].p = { OrginPos.x + widthHeight.x, OrginPos.y - widthHeight.y, depth };
+	}
 
 	m_OrginPos = orginPos;
 	m_WidthHeight = widthHeight;
@@ -213,7 +226,8 @@ void K_UIObject::Drag()
 		float OffsetNdcX = (Offset.x / g_rtClient.right) * 2.0f;
 		float OffsetNdcY = -((Offset.y / g_rtClient.bottom) * 2.0f);
 
-		m_OrginPos.x += OffsetNdcX;
-		m_OrginPos.y += OffsetNdcY;
+		if (m_bIsInList) { m_ListPos.x += OffsetNdcX; m_ListPos.y += OffsetNdcY;}
+		else {	m_OrginPos.x += OffsetNdcX; m_OrginPos.y += OffsetNdcY;}
+
 	}
 }

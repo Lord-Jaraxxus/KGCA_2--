@@ -5,6 +5,7 @@
 #include "K_UIObject.h"
 #include "K_Button.h"
 #include "K_Sprite.h"
+#include "K_List.h"
 
 class Sample : public K_GameCore
 {
@@ -24,10 +25,11 @@ public:
 	// std::vector<K_UIObject*> m_pUIAlphaList; // 필요해질 날이 올라나? 알파값 있는것만 따로 빼는 리스트
 	int m_CurrentID = 1;
 
-	std::vector<K_UIObject*> m_pRectList;
-	std::vector<K_Button*> m_pButtonList;
-	std::vector<K_Sprite*> m_pSpriteList;
-	
+	std::vector<K_UIObject*>	m_pRectList;
+	std::vector<K_Button*>		m_pButtonList;
+	std::vector<K_Sprite*>		m_pSpriteList;
+	std::vector<K_List*>		m_pListList;
+
 	ImVec2 m_CursorPos;
 
 public:
@@ -39,14 +41,16 @@ public:
 	bool IsAlphaBlend = true;
 	bool IsClear = false;
 
+	char NewName[256] = { 0, };
 	char ImageName[256] =  { 0, };
 	char ButtonName[256] = { 0, };
-	char NewName[256] = { 0, };
+	char ListName[256] = { 0, };
 
+	// XY = 원점, WH = Width Heigt, UV=UV, DA = Depth Alpha
 	float ImageXY[2] = { 0, };
 	float ImageWH[2] = { 1, 1 };
 	float ImageUV[2][2] = { { 0, 0 }, {1, 1} };
-	float ImageDA[2] = { 0, 1 };
+	float ImageDA[2] = { 0, 1 };		
 	float ButtonXY[2] = { 0, };
 	float ButtonWH[4][2] = { 0,  };	// [N H C D] [X Y]
 	float ButtonUV[4][2][2] = { {{0,0},{1,1}}, {{0,0},{1,1}}, {{0,0},{1,1}}, {{0,0},{1,1}} };	// [N H C D] [TopLeft BottomRight] [X Y]
@@ -54,6 +58,7 @@ public:
 	float SpriteXY[2] = { 0, };
 	float SpriteWH[2] = { 1, 1 };
 	float SpriteDA[2] = { 0, 1 };
+	float ListXY[2] = { 0, };
 
 	std::wstring m_szFileName = L"newfile";
 	std::wstring m_szFileContent = L"";
@@ -68,8 +73,9 @@ public:
 
 public:
 	K_UIObject* CreateNewRect(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name = L"");
-	K_Button* CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name = L"");
-	K_Sprite* CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name = L"");
+	K_Button*	CreateNewButton(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name = L"");
+	K_Sprite*	CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float depth, float alpha, std::wstring name = L"");
+	K_List*		CreateNewList(ImVec2 orginPos, std::wstring name = L"");
 	void Clear();
 
 	std::wstring FileOpen();

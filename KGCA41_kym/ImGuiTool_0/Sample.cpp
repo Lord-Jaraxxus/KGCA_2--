@@ -315,6 +315,17 @@ void Sample::ImGuiFrame()
 		{
 			CreateNewSprite({ SpriteXY[0], SpriteXY[1] }, { 0.5f, 0.5f }, SpriteDA[0], SpriteDA[1]);
 		}
+	}	
+	
+	if (ImGui::CollapsingHeader(u8"리스트", nullptr))
+	{
+		ImGui::InputTextWithHint(u8"리스트 이름", "Black List", ListName, sizeof(ListName));
+		ImGui::InputFloat2(u8"리스트 원점 (NDC)", ListXY);
+
+		if (ImGui::Button(u8"리스트 생성 버튼"))
+		{
+			// CreateList();
+		}
 	}
 
 	if (ImGui::CollapsingHeader(u8"상태 변환", nullptr))
@@ -606,6 +617,16 @@ K_Sprite* Sample::CreateNewSprite(ImVec2 orginPos, ImVec2 widthHeight, float dep
 	
 	delete newSprite;
 	return nullptr;
+}
+
+K_List* Sample::CreateNewList(ImVec2 orginPos, std::wstring name)
+{
+	K_List* NewList = new K_List;
+	NewList->m_ListOrginPos = orginPos;
+	NewList->m_szListName = name;
+	m_pListList.push_back(NewList);
+
+	return NewList;
 }
 
 void Sample::Clear()
